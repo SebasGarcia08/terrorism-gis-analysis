@@ -11,6 +11,10 @@ namespace terrorism_gis_analysis.Controller
 {
     class AppController
     {
+        public static readonly string NUMERICAL;
+        public static readonly string CATEGORICAL;
+        public static readonly string STRING;
+
         private DataTable dt;
 
         public AppController()
@@ -52,6 +56,11 @@ namespace terrorism_gis_analysis.Controller
                 int progress = (int) Math.Ceiling((linesRead / numLines) * 100);
                 bkgWorker.ReportProgress(progress);
             }
+        }
+
+        public void SendHeaderTypes(Dictionary<string, string> header2Type)
+        {
+
         }
 
         public DataTable GetDataTable()
