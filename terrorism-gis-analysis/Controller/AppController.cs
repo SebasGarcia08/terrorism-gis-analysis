@@ -11,9 +11,9 @@ namespace terrorism_gis_analysis.Controller
 {
     class AppController
     {
-        public static readonly string NUMERICAL;
-        public static readonly string CATEGORICAL;
-        public static readonly string STRING;
+        public static readonly string NUMERICAL = "NUMERICAL";
+        public static readonly string CATEGORICAL = "CATEGORICAL";
+        public static readonly string STRING = "STRING";
 
         private DataTable dt;
 

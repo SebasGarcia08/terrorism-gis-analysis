@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Data;
 using System.ComponentModel;
 using System.IO;
+using terrorism_gis_analysis.Controller;
 
 namespace terrorism_gis_analysis.Model
 {
@@ -13,15 +14,16 @@ namespace terrorism_gis_analysis.Model
     {
         private DataTable dt;
         private Dictionary<string, string> columnTypes;
-        private Dictionary<string, string[]> columnCategoricalValues;
+        private Dictionary<string, HashSet<string>> columnCategoricalValues;
         private string[] lines = null;
         private int numCols;
+        private string[] headers;
 
         public Report()
         {
             dt = new DataTable();
             columnTypes = new Dictionary<string, string>();
-            columnCategoricalValues = new Dictionary<string, string[]>();
+            columnCategoricalValues = new Dictionary<string, HashSet<string>>();
         }
 
         public void readTable(BackgroundWorker bkgWorker, Dictionary<string, string> header2Type)
@@ -39,7 +41,18 @@ namespace terrorism_gis_analysis.Model
                 {
                     Row = dt.NewRow();
                     for (int f = 0; f < numCols; f++)
+                    {
                         Row[f] = Fields[f];
+                        
+                        // Add unique values of Categorical columns
+                        if(columnTypes[headers[f]].Equals(AppController.CATEGORICAL))
+                        {
+                            HashSet<string> aux = columnCategoricalValues[headers[f]];
+                            aux.Add(Fields[f]);
+                            columnCategoricalValues[headers[f]] = aux;
+                        }
+                    }
+                        
                     dt.Rows.Add(Row);
                 }
                 linesRead += 1;
@@ -67,6 +80,8 @@ namespace terrorism_gis_analysis.Model
             //1st row must be column names; force lower case to ensure matching later on.
             for (int i = 0; i < numCols; i++)
                 dt.Columns.Add(headers[i], typeof(string));
+
+            this.headers = headers;
 
             return headers;
         }
