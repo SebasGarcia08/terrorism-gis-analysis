@@ -83,6 +83,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller\AppController.cs" />
+    <Compile Include="Model\CategoricalFilter.cs" />
+    <Compile Include="Model\ModelController.cs" />
+    <Compile Include="Model\Filter.cs" />
+    <Compile Include="Model\IFilterGenerator.cs" />
+    <Compile Include="Model\NumberFilter.cs" />
+    <Compile Include="Model\Report.cs" />
+    <Compile Include="Model\StringFilter.cs" />
     <Compile Include="UI\ChartsForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -144,8 +151,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Model\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

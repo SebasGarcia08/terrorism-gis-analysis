@@ -21,7 +21,5 @@ namespace terrorism_gis_analysis.Model
         {
             return "(" + base.columnName + " >= " + param1 + " AND " + base.columnName + " <= " + param2 + ")"; 
         }
-
-
     }
 }

@@ -4,51 +4,56 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data;
 
 namespace terrorism_gis_analysis.Model
 {
-    public class Controller
+    public class ModelController
     {
 
         private List<Filter> filters;
         private Report report;
 
-        public Controller()
+        public ModelController()
         {
             report = new Report();
             filters = new List<Filter>();
         }
 
-        public string[] getHeaders(string filePath)
+        public string[] GetHeaders()
         {
-            return report.readHeaders(filePath);
+            return report.GetHeaders();
         }
 
-        public void readTable(BackgroundWorker bkgWorker, Dictionary<string, string> header2Type)
+        public void ReadHeaders(string FilePath)
         {
-            report.readTable(bkgWorker, header2Type);
+            report.ReadHeaders(FilePath);
         }
 
-        public String getFilterExpression()
+        public void ReadTable(BackgroundWorker bkgWorker, Dictionary<string, string> header2Type)
+        {
+            report.ReadTable(bkgWorker, header2Type);
+        }
+
+        public DataRow[] Filter()
+        {
+            return report.FilterTable(GetFilterExpression());
+        }
+
+        public string GetFilterExpression()
         {
             string exp = "";
             
             for(int i=0; i<filters.Count; i++)
             {
                 if (i < filters.Count - 1)
-                {
                     exp += filters[i].GetFilterExpression() + " AND ";
-                }
                 else
-                {
                     exp += filters[i];
-                }
             }
 
             return exp;
 
         }
-
-
     }
 }

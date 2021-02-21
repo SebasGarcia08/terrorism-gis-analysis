@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Data;
 using System.IO;
 using System.ComponentModel;
+using terrorism_gis_analysis.Model;
 
 namespace terrorism_gis_analysis.Controller
 {
@@ -14,16 +15,18 @@ namespace terrorism_gis_analysis.Controller
         public static readonly string NUMERICAL = "NUMERICAL";
         public static readonly string CATEGORICAL = "CATEGORICAL";
         public static readonly string STRING = "STRING";
-
-        private DataTable dt;
+        private ModelController MController;
 
         public AppController()
         {
+
         }
 
-        public DataTable GetDataTable()
+        public string[] ReadAndGetColumns(string FilePath)
         {
-            return dt;
+            MController.ReadHeaders(FilePath);
+            return MController.GetHeaders();
         }
+
     }
 }

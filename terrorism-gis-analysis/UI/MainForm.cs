@@ -9,27 +9,90 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using terrorism_gis_analysis.Controller;
+using System.Runtime.InteropServices;
 
 namespace terrorism_gis_analysis
 {
+
     public partial class MainForm : Form
     {
-        public readonly String TABLE = "Table";
-        public readonly String MAP = "Map";
-        public readonly String CHARTS = "Charts";
+
+        public readonly string TABLE = "Table";
+        public readonly string MAP = "Map";
+        public readonly string CHARTS = "Charts";
 
         private AppController Controller;
+
         private MapForm MapForm;
         private ChartsForm ChartsForm;
         private TableForm TableForm;
 
+        /// <summary>
+        /// Round corners
+        /// </summary>
+        [DllImport("Gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
+
+        private static extern IntPtr CreateRoundRectRgn
+         (
+              int nLeftRect,
+              int nTopRect,
+              int nRightRect,
+              int nBottomRect,
+              int nWidthEllipse,
+              int nHeightEllipse
+          );
+
         public MainForm()
         {
             InitializeComponent();
+            Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, Width, Height, 25, 25));
             this.Controller = new AppController();
             this.MapForm = new MapForm() { Dock = DockStyle.Fill, TopLevel = false, TopMost = true };
             this.ChartsForm = new ChartsForm() { Dock = DockStyle.Fill, TopLevel = false, TopMost = true };
             this.TableForm = new TableForm() { Dock = DockStyle.Fill, TopLevel = false, TopMost = true };
+            ConfigureInitialState();
+        }
+
+        public void ConfigureInitialState()
+        {
+            PnlDropDownSections.Visible = false;
+            BtnCharts.Enabled = false;
+            BtnMap.Enabled = false;
+            BtnTable.Enabled = false;
+        }
+
+        public void ReadingDataOKControls()
+        {
+            ShowSubMenu(PnlDropDownSections);
+            BtnCharts.Enabled = true;
+            BtnMap.Enabled = true;
+        }
+
+        public void HideSubMenu(Panel SubMenu)
+        {
+            if (SubMenu.Visible)
+                SubMenu.Visible = false;
+        }
+
+        public void ShowSubMenu(Panel SubMenu)
+        {
+            if (!SubMenu.Visible)
+            {
+                HideSubMenu(SubMenu);
+                SubMenu.Visible = true;
+            }
+            else
+            {
+                SubMenu.Visible = false;
+            }
+        }
+
+        /// <summary>
+        /// Events
+        /// </summary>
+        private void BtnSections_Click(object sender, EventArgs e)
+        {
+            ShowSubMenu(PnlDropDownSections);
         }
 
         private void CBoxChangePanel_SelectedIndexChanged(object sender, EventArgs e)
@@ -55,19 +118,20 @@ namespace terrorism_gis_analysis
         {
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                progressBar.Visible = true;
-                LblPercentage.Visible = true;
-                BkgWorkerDataReader.RunWorkerAsync();
-            }
-            else
-            {
-
+                string[] Columns = Controller.ReadAndGetColumns(openFileDialog.FileName);
+                ShowHeaders(Columns);
             }
         }
 
-        private void BkgWorkerDataReader_DoWork(object sender, DoWorkEventArgs e)
+        public void ShowHeaders(string[] Columns)
         {
-            Controller.ReadCSV(openFileDialog.FileName, BkgWorkerDataReader);
+            // TODO: Show columns on UI in order to make the user specify the type of each one
+
+        }
+
+        public void BkgWorkerDataReader_DoWork(object sender, DoWorkEventArgs e)  
+        { 
+
         }
 
         private void BkgWorkerDataReader_ProgressChanged(object sender, ProgressChangedEventArgs e)
@@ -86,8 +150,6 @@ namespace terrorism_gis_analysis
             CBoxChangePanel.Items.Add(TABLE);
             progressBar.Visible = false;
             LblPercentage.Visible = false;
-            TableForm.setDataSource(Controller.GetDataTable());
-            MapForm.SetDabatase(Controller.GetDataTable());
         }
     }
 }

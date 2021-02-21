@@ -26,7 +26,7 @@ namespace terrorism_gis_analysis.Model
             columnCategoricalValues = new Dictionary<string, HashSet<string>>();
         }
 
-        public void readTable(BackgroundWorker bkgWorker, Dictionary<string, string> header2Type)
+        public void ReadTable(BackgroundWorker bkgWorker, Dictionary<string, string> header2Type)
         {
 
             string[] Fields;
@@ -63,7 +63,7 @@ namespace terrorism_gis_analysis.Model
             lines = null;
         }
 
-        public string[] readHeaders(string filePath)
+        public string[] ReadHeaders(string filePath)
         {
             this.dt = new DataTable();
             lines = File.ReadAllLines(filePath);
@@ -84,6 +84,21 @@ namespace terrorism_gis_analysis.Model
             this.headers = headers;
 
             return headers;
+        }
+
+        public string[] GetHeaders()
+        {
+            return headers;
+        }
+
+        public DataTable GetDataTable()
+        {
+            return dt;
+        }
+
+        public DataRow[] FilterTable(string FilterExpr)
+        {
+            return dt.Select(FilterExpr);
         }
 
     }
