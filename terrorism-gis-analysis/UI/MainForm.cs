@@ -19,31 +19,28 @@ namespace terrorism_gis_analysis
         public readonly String CHARTS = "Charts";
 
         private AppController Controller;
+        private MapForm MapForm;
+        private ChartsForm ChartsForm;
+        private TableForm TableForm;
 
         public MainForm()
         {
             InitializeComponent();
             this.Controller = new AppController();
+            this.MapForm = new MapForm() { Dock = DockStyle.Fill, TopLevel = false, TopMost = true };
+            this.ChartsForm = new ChartsForm() { Dock = DockStyle.Fill, TopLevel = false, TopMost = true };
+            this.TableForm = new TableForm() { Dock = DockStyle.Fill, TopLevel = false, TopMost = true };
         }
-        
+
         private void CBoxChangePanel_SelectedIndexChanged(object sender, EventArgs e)
         {
             string selectedField = (string) CBoxChangePanel.SelectedItem;
             if (selectedField.Equals(MAP))
-            {
-                MapForm mapForm = new MapForm() { Dock = DockStyle.Fill, TopLevel = false, TopMost = true };
-                LoadForm(mapForm);
-            }
+                LoadForm(MapForm);
             else if (selectedField.Equals(CHARTS))
-            {
-                ChartsForm chartsForm = new ChartsForm() { Dock = DockStyle.Fill, TopLevel = false, TopMost = true };
-                LoadForm(chartsForm);
-            }
-            else if (selectedField.Equals(TABLE))
-            {
-                TableForm tableForm = new TableForm() { Dock = DockStyle.Fill, TopLevel = false, TopMost = true };
-                LoadForm(tableForm);
-            }
+                LoadForm(ChartsForm);
+            else
+                LoadForm(TableForm);
         }
 
         private void LoadForm(Form form)
@@ -79,7 +76,7 @@ namespace terrorism_gis_analysis
             progressBar.Value = e.ProgressPercentage;
 
             // Change the value of the ProgressBar to the BackgroundWorker progress.
-            LblPercentage.Text = e.ProgressPercentage.ToString() + "%";
+            LblPercentage.Text = e.ProgressPercentage.ToString();
         }
 
         private void BkgWorkerDataReader_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) 
@@ -89,6 +86,7 @@ namespace terrorism_gis_analysis
             CBoxChangePanel.Items.Add(TABLE);
             progressBar.Visible = false;
             LblPercentage.Visible = false;
+            TableForm.setDataSource(Controller.GetDataTable());
         }
     }
 }

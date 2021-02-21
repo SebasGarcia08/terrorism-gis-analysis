@@ -21,5 +21,10 @@ namespace terrorism_gis_analysis
         {
 
         }
+
+        public void setDataSource(DataTable dt)
+        {
+            this.dataGridView.DataSource = dt;
+        }
     }
 }
