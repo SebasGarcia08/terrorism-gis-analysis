@@ -85,39 +85,40 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="controller\ChartsForm.cs">
+    <Compile Include="Controller\AppController.cs" />
+    <Compile Include="UI\ChartsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="controller\ChartsForm.Designer.cs">
+    <Compile Include="UI\ChartsForm.Designer.cs">
       <DependentUpon>ChartsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="controller\MainForm.cs">
+    <Compile Include="UI\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="controller\MainForm.Designer.cs">
+    <Compile Include="UI\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="controller\MapForm.cs">
+    <Compile Include="UI\MapForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="controller\MapForm.Designer.cs">
+    <Compile Include="UI\MapForm.Designer.cs">
       <DependentUpon>MapForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ui\Program.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="controller\TableForm.cs">
+    <Compile Include="UI\TableForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="controller\TableForm.Designer.cs">
+    <Compile Include="UI\TableForm.Designer.cs">
       <DependentUpon>TableForm.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="controller\ChartsForm.resx">
+    <EmbeddedResource Include="UI\ChartsForm.resx">
       <DependentUpon>ChartsForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="controller\MainForm.resx">
+    <EmbeddedResource Include="UI\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="controller\MapForm.resx">
+    <EmbeddedResource Include="UI\MapForm.resx">
       <DependentUpon>MapForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -129,7 +130,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="controller\TableForm.resx">
+    <EmbeddedResource Include="UI\TableForm.resx">
       <DependentUpon>TableForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
@@ -158,6 +159,9 @@
     <Content Include="MatplotlibCS\task.py" />
     <Content Include="MatplotlibCS\vline.py" />
     <Content Include="Scripts\Plotly\plotly.min.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Model\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
