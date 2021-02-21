@@ -10,18 +10,16 @@ using System.Windows.Forms;
 
 namespace terrorism_gis_analysis
 {
-    public partial class Form1 : Form
+    public partial class MapForm : Form
     {
-        public Form1()
+        public MapForm()
         {
             InitializeComponent();
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void Map_Load(object sender, EventArgs e)
         {
 
         }
-
-
     }
 }
