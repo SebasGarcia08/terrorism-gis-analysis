@@ -8,7 +8,6 @@ namespace terrorism_gis_analysis.Model
 {
     public class NumberFilter : Filter
     {
-
         private int param1;
         private int param2;
 
@@ -20,7 +19,7 @@ namespace terrorism_gis_analysis.Model
 
         public new string GetFilterExpression()
         {
-            return ""; //TODO
+            return "(" + base.columnName + " >= " + param1 + " AND " + base.columnName + " <= " + param2 + ")"; 
         }
 
 

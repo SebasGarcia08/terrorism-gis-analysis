@@ -14,5 +14,11 @@ namespace terrorism_gis_analysis.Model
         {
             this.param = param;
         }
+
+        public new string GetFilterExpression()
+        {
+            return "(" + base.columnName + " LIKE \'%" + param + "\')";
+        }
+
     }
 }

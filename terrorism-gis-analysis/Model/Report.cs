@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data;
+using System.ComponentModel;
 
 namespace terrorism_gis_analysis.Model
 {
@@ -20,28 +21,18 @@ namespace terrorism_gis_analysis.Model
             columnCategoricalValues = new Dictionary<string, string[]>();
         }
 
-        public void readData()
+        //TODO
+        public void readTable(string filePath, BackgroundWorker bkgworker, Dictionary<string, string> header2Type)
         {
-            readTable(""); //TODO
-            readColumnTypes(""); //TODO
-            readColumnCategoricalValues();
+            
         }
 
-        public void readTable(string filePath)
+        //TODO
+        public string[] readHeaders()
         {
-
+            string[] a = {""};
+            return a; 
         }
-
-        public void readColumnTypes(string filePath)
-        {
-
-        }
-
-        public void readColumnCategoricalValues()
-        {
-
-        }
-
 
     }
 }

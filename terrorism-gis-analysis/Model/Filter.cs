@@ -8,7 +8,7 @@ namespace terrorism_gis_analysis.Model
 {
     public abstract class Filter : IFilterGenerator
     {
-        private string columnName;
+        protected string columnName;
 
         public Filter(string columnName)
         {
