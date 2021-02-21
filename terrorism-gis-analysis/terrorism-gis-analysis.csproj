@@ -39,9 +39,6 @@
     <Reference Include="GMap.NET.WindowsForms, Version=1.7.5.0, Culture=neutral, PublicKeyToken=b85b9027b614afef, processorArchitecture=MSIL">
       <HintPath>..\packages\GMap.NET.WindowsForms.1.7.5\lib\net40\GMap.NET.WindowsForms.dll</HintPath>
     </Reference>
-    <Reference Include="MatplotlibCS, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MatplotlibCS.1.0.63\lib\netstandard2.0\MatplotlibCS.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -146,19 +143,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="MatplotlibCS\annotations.py" />
-    <Content Include="MatplotlibCS\arc.py" />
-    <Content Include="MatplotlibCS\helpers.py" />
-    <Content Include="MatplotlibCS\histogram.py" />
-    <Content Include="MatplotlibCS\hline.py" />
-    <Content Include="MatplotlibCS\line_2d.py" />
-    <Content Include="MatplotlibCS\matplotlib_cs.py" />
-    <Content Include="MatplotlibCS\subplot.py" />
-    <Content Include="MatplotlibCS\task.py" />
-    <Content Include="MatplotlibCS\vline.py" />
-    <Content Include="Scripts\Plotly\plotly.min.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Model\" />
