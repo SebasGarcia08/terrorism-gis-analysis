@@ -25,37 +25,10 @@ namespace terrorism_gis_analysis
 
         private void loadBarChart()
         {
-            Dictionary<string, int> attackTypesCount = new Dictionary<string, int>();
-            foreach (DataRow row in db.Rows)
-            {
-                if (attackTypesCount.ContainsKey((string)row["attacktype1_txt"]))
-                {
-                    attackTypesCount[(string)row["attacktype1_txt"]] += 1;
-                }
-                else
-                {
-                    attackTypesCount.Add((string)row["attacktype1_txt"], 1);
-                }
-            }
+            string[] x;
+            int[] y;
 
-            DataTable dt = new DataTable();
-            dt.Columns.Add("Attack types", typeof(string));
-            dt.Columns.Add("Count", typeof(int));
-
-            foreach (KeyValuePair<string, int> kvp in attackTypesCount)
-            {
-                dt.Rows.Add(new Object[] { kvp.Key, kvp.Value });
-            }
-
-            //Get the names of Attack types
-            string[] x = (from p in dt.AsEnumerable()
-                          orderby p.Field<string>("Attack types") ascending
-                          select p.Field<string>("Attack types")).ToArray();
-
-            //Get the Count of each Attack type
-            int[] y = (from p in dt.AsEnumerable()
-                       orderby p.Field<string>("Attack types") ascending
-                       select p.Field<int>("Count")).ToArray();
+            CountAttacks("attacktype1_txt", out x, out y);
 
             //Series style
             barChart.Series[0].LegendText = "Terrorist\nattacks";
@@ -66,43 +39,17 @@ namespace terrorism_gis_analysis
             //Areas style
             barChart.ChartAreas[0].Axes[0].MajorGrid.Enabled = false;
             barChart.ChartAreas[0].Axes[1].MajorGrid.Enabled = false;
-
+            
+            //Title
             barChart.Titles.Add("Terrorist attacks per Type");
         }
 
         private void loadLineChart()
         {
-            Dictionary<string, int> yearsAttacksCount = new Dictionary<string, int>();
-            foreach (DataRow row in db.Rows)
-            {
-                if (yearsAttacksCount.ContainsKey((string)row["iyear"]))
-                {
-                    yearsAttacksCount[(string)row["iyear"]] += 1;
-                }
-                else
-                {
-                    yearsAttacksCount.Add((string)row["iyear"], 1);
-                }
-            }
+            string[] x;
+            int[] y;
 
-            DataTable dt = new DataTable();
-            dt.Columns.Add("Year", typeof(string));
-            dt.Columns.Add("Count", typeof(int));
-
-            foreach (KeyValuePair<string, int> kvp in yearsAttacksCount)
-            {
-                dt.Rows.Add(new Object[] { kvp.Key, kvp.Value });
-            }
-
-            //Get the Year
-            string[] x = (from p in dt.AsEnumerable()
-                          orderby p.Field<string>("Year") ascending
-                          select p.Field<string>("Year")).ToArray();
-
-            //Get the Count of attacks for each Year
-            int[] y = (from p in dt.AsEnumerable()
-                       orderby p.Field<string>("Year") ascending
-                       select p.Field<int>("Count")).ToArray();
+            CountAttacks("iyear", out x, out y);
 
             //Series style
             lineChart.Series[0].LegendText = "Terrorist\nattacks";
@@ -115,42 +62,16 @@ namespace terrorism_gis_analysis
             //Areas style
             lineChart.ChartAreas[0].AxisX.Interval = 1;
 
+            //Title
             lineChart.Titles.Add("Terrorist attacks through Years");
         }
 
         private void loadPieChart()
         {
-            Dictionary<string, int> regionsAttacksCount = new Dictionary<string, int>();
-            foreach (DataRow row in db.Rows)
-            {
-                if (regionsAttacksCount.ContainsKey((string)row["region_txt"]))
-                {
-                    regionsAttacksCount[(string)row["region_txt"]] += 1;
-                }
-                else
-                {
-                    regionsAttacksCount.Add((string)row["region_txt"], 1);
-                }
-            }
+            string[] x;
+            int[] y;
 
-            DataTable dt = new DataTable();
-            dt.Columns.Add("Region", typeof(string));
-            dt.Columns.Add("Count", typeof(int));
-
-            foreach (KeyValuePair<string, int> kvp in regionsAttacksCount)
-            {
-                dt.Rows.Add(new Object[] { kvp.Key, kvp.Value });
-            }
-
-            //Get the Region
-            string[] x = (from p in dt.AsEnumerable()
-                          orderby p.Field<string>("Region") ascending
-                          select p.Field<string>("Region")).ToArray();
-
-            //Get the Count of attacks for each Region
-            int[] y = (from p in dt.AsEnumerable()
-                       orderby p.Field<string>("Region") ascending
-                       select p.Field<int>("Count")).ToArray();
+            CountAttacks("region_txt", out x, out y);
 
             //Series style
             pieChart.Series[0].ChartType = SeriesChartType.Pie;
@@ -159,7 +80,43 @@ namespace terrorism_gis_analysis
             pieChart.ChartAreas[0].Area3DStyle.Enable3D = true;
             pieChart.Series[0]["PieLabelStyle"] = "Disabled";
 
+            //Title
             pieChart.Titles.Add("Terrorist attacks per World Region");
+        }
+
+        private void CountAttacks(string field, out string[] x, out int[] y)
+        {
+            Dictionary<string, int> attacksCount = new Dictionary<string, int>();
+            foreach (DataRow row in db.Rows)
+            {
+                if (attacksCount.ContainsKey((string)row[field]))
+                {
+                    attacksCount[(string)row[field]] += 1;
+                }
+                else
+                {
+                    attacksCount.Add((string)row[field], 1);
+                }
+            }
+
+            DataTable dt = new DataTable();
+            dt.Columns.Add(field, typeof(string));
+            dt.Columns.Add("Count", typeof(int));
+
+            foreach (KeyValuePair<string, int> kvp in attacksCount)
+            {
+                dt.Rows.Add(new Object[] { kvp.Key, kvp.Value });
+            }
+
+            //Get the Field values
+            x = (from p in dt.AsEnumerable()
+                          orderby p.Field<string>(field) ascending
+                          select p.Field<string>(field)).ToArray();
+
+            //Get the Count of attacks for each Field value
+            y = (from p in dt.AsEnumerable()
+                       orderby p.Field<string>(field) ascending
+                       select p.Field<int>("Count")).ToArray();
         }
 
         public void setDataBase(DataTable dt)
