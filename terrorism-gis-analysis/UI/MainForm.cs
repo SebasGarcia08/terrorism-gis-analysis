@@ -152,6 +152,7 @@ namespace terrorism_gis_analysis
             MapForm.SetDabatase(dt);
             MapForm.SetColsInToolTips(ColsInToolTip);
             TableForm.SetDataSource(dt);
+            ChartsForm.setDataBase(dt);
         }
 
         private void BtnReadTable_Click(object sender, EventArgs e)
