@@ -19,7 +19,7 @@ namespace terrorism_gis_analysis.Controller
 
         public AppController()
         {
-
+            this.MController = new ModelController();
         }
 
         public string[] ReadAndGetColumns(string FilePath)

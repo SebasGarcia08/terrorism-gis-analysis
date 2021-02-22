@@ -18,17 +18,22 @@ namespace terrorism_gis_analysis.Model
         private string[] lines = null;
         private int numCols;
         private string[] headers;
+        private Dictionary<string, char[]> extension2Sep;
+        private char[] separator;
 
         public Report()
         {
             dt = new DataTable();
             columnTypes = new Dictionary<string, string>();
             columnCategoricalValues = new Dictionary<string, HashSet<string>>();
+
+            extension2Sep = new Dictionary<string, char[]>();
+            extension2Sep.Add("csv", new char[] { ','  });
+            extension2Sep.Add("tsv", new char[] { '\t' });
         }
 
         public void ReadTable(BackgroundWorker bkgWorker, Dictionary<string, string> header2Type)
         {
-
             string[] Fields;
             DataRow Row;
             double numLines = lines.GetLength(0);
@@ -36,25 +41,22 @@ namespace terrorism_gis_analysis.Model
 
             for (int i = 1; i < lines.GetLength(0); i++)
             {
-                Fields = lines[i].Split(new char[] { ',' });
-                if (Fields.GetLength(0) == numCols)
+                Fields = lines[i].Split(separator);
+                Row = dt.NewRow();
+                for (int f = 0; f < numCols; f++)
                 {
-                    Row = dt.NewRow();
-                    for (int f = 0; f < numCols; f++)
+                    Row[f] = Fields[f];
+                        
+                    // Add unique values of Categorical columns
+                    if(columnTypes[headers[f]].Equals(AppController.CATEGORICAL))
                     {
-                        Row[f] = Fields[f];
-                        
-                        // Add unique values of Categorical columns
-                        if(columnTypes[headers[f]].Equals(AppController.CATEGORICAL))
-                        {
-                            HashSet<string> aux = columnCategoricalValues[headers[f]];
-                            aux.Add(Fields[f]);
-                            columnCategoricalValues[headers[f]] = aux;
-                        }
+                        HashSet<string> aux = columnCategoricalValues[headers[f]];
+                        aux.Add(Fields[f]);
+                        columnCategoricalValues[headers[f]] = aux;
                     }
-                        
-                    dt.Rows.Add(Row);
                 }
+                        
+                dt.Rows.Add(Row);
                 linesRead += 1;
                 int progress = (int)Math.Ceiling((linesRead / numLines) * 100);
                 bkgWorker.ReportProgress(progress);
@@ -63,12 +65,16 @@ namespace terrorism_gis_analysis.Model
             lines = null;
         }
 
-        public string[] ReadHeaders(string filePath)
+        public void ReadHeaders(string FilePath)
         {
-            this.dt = new DataTable();
-            lines = File.ReadAllLines(filePath);
+            string[] fileAndExtension = FilePath.Split(new char[] { '.' });
+            string extension = fileAndExtension[fileAndExtension.Length - 1];
+            this.separator = extension2Sep[extension];
 
-            string[] headers = lines[0].Split(new char[] { ',' });
+            this.dt = new DataTable();
+            lines = File.ReadAllLines(FilePath);
+
+            string[] headers = lines[0].Split(separator);
 
             // Lowercase column names
             for (int i = 0; i < headers.GetLength(0); i++)
@@ -82,8 +88,6 @@ namespace terrorism_gis_analysis.Model
                 dt.Columns.Add(headers[i], typeof(string));
 
             this.headers = headers;
-
-            return headers;
         }
 
         public string[] GetHeaders()

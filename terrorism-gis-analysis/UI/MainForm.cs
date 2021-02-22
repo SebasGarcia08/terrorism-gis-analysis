@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.IO;
 using terrorism_gis_analysis.Controller;
 using System.Runtime.InteropServices;
+using terrorism_gis_analysis.UI;
 
 namespace terrorism_gis_analysis
 {
@@ -40,17 +41,20 @@ namespace terrorism_gis_analysis
               int nBottomRect,
               int nWidthEllipse,
               int nHeightEllipse
-          );
+         );
 
         public MainForm()
         {
             InitializeComponent();
-            Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, Width, Height, 25, 25));
+            
+            Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, Width, Height, 30, 30));
+            
             this.Controller = new AppController();
+
             this.MapForm = new MapForm() { Dock = DockStyle.Fill, TopLevel = false, TopMost = true };
             this.ChartsForm = new ChartsForm() { Dock = DockStyle.Fill, TopLevel = false, TopMost = true };
             this.TableForm = new TableForm() { Dock = DockStyle.Fill, TopLevel = false, TopMost = true };
-            ConfigureInitialState();
+ //           ConfigureInitialState();
         }
 
         public void ConfigureInitialState()
@@ -95,17 +99,6 @@ namespace terrorism_gis_analysis
             ShowSubMenu(PnlDropDownSections);
         }
 
-        private void CBoxChangePanel_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            string selectedField = (string) CBoxChangePanel.SelectedItem;
-            if (selectedField.Equals(MAP))
-                LoadForm(MapForm);
-            else if (selectedField.Equals(CHARTS))
-                LoadForm(ChartsForm);
-            else
-                LoadForm(TableForm);
-        }
-
         private void LoadForm(Form form)
         {
             this.PanelFormLoader.Controls.Clear();
@@ -126,7 +119,14 @@ namespace terrorism_gis_analysis
         public void ShowHeaders(string[] Columns)
         {
             // TODO: Show columns on UI in order to make the user specify the type of each one
-
+            foreach(string col in Columns)
+            {
+                Form objForm = new HeaderTypeSelector(col) {  TopLevel = false};
+                this.PnlHeaderType.Controls.Add(objForm);
+                objForm.BringToFront();
+                Console.WriteLine(col);
+                objForm.Show();
+            }
         }
 
         public void BkgWorkerDataReader_DoWork(object sender, DoWorkEventArgs e)  
@@ -144,10 +144,8 @@ namespace terrorism_gis_analysis
         }
 
         private void BkgWorkerDataReader_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) 
-        { 
-            CBoxChangePanel.Items.Add(MAP);
-            CBoxChangePanel.Items.Add(CHARTS);
-            CBoxChangePanel.Items.Add(TABLE);
+        {
+            ReadingDataOKControls();
             progressBar.Visible = false;
             LblPercentage.Visible = false;
         }
