@@ -17,13 +17,13 @@ namespace terrorism_gis_analysis
         private GMapOverlay markers = new GMapOverlay("markers");
 
         private DataTable db;
+        private List<string> ColsInToolTips;
 
         public MapForm()
         {
             InitializeComponent();
 
             points = new List<PointLatLng>();
-
         }
 
         private void Map_Load(object sender, EventArgs e)
@@ -44,7 +44,10 @@ namespace terrorism_gis_analysis
             {
                 PointLatLng p = points[i];
                 GMapMarker marker = new GMarkerGoogle(p, GMarkerGoogleType.red_dot);
-                marker.ToolTipText = p.Lat + "\n" + p.Lng + "\n" + (string)db.Rows[i]["iyear"] + "/" + (string)db.Rows[i]["imonth"] + "/" + (string)db.Rows[i]["iday"] + "\n" + (string)db.Rows[i]["attacktype1_txt"];
+                foreach(string col in ColsInToolTips)
+                {
+                    marker.ToolTipText += col + ":" + db.Rows[i][col].ToString() + "\n";
+                }
                 markers.Markers.Add(marker);
             }
         }
@@ -53,8 +56,8 @@ namespace terrorism_gis_analysis
         {
             foreach (DataRow row in db.Rows)
             {
-                double lat = double.Parse((string)row["latitude"], CultureInfo.InvariantCulture);
-                double lng = double.Parse((string)row["longitude"], CultureInfo.InvariantCulture);
+                double lat = (double) row["latitude"];
+                double lng = (double) row["longitude"];
 
                 PointLatLng p = new PointLatLng(lat, lng);
 
@@ -69,5 +72,10 @@ namespace terrorism_gis_analysis
         {
             db = dt;
         }
+
+        public void SetColsInToolTips(List<string> headers)
+        {
+            this.ColsInToolTips = headers;
+        } 
     }
 }

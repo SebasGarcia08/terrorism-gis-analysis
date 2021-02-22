@@ -31,6 +31,8 @@ namespace terrorism_gis_analysis
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.panel1 = new System.Windows.Forms.Panel();
+            this.PnlDropdownFilters = new System.Windows.Forms.Panel();
+            this.BtnFlters = new System.Windows.Forms.Button();
             this.PnlDropDownSections = new System.Windows.Forms.Panel();
             this.BtnTable = new System.Windows.Forms.Button();
             this.BtnCharts = new System.Windows.Forms.Button();
@@ -42,12 +44,14 @@ namespace terrorism_gis_analysis
             this.loadDataBtn = new System.Windows.Forms.Button();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.PanelFormLoader = new System.Windows.Forms.Panel();
+            this.BtnReadTable = new System.Windows.Forms.Button();
+            this.PnlHeaderType = new System.Windows.Forms.FlowLayoutPanel();
             this.LblPercentage = new System.Windows.Forms.Label();
             this.progressBar = new System.Windows.Forms.ProgressBar();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.BkgWorkerDataReader = new System.ComponentModel.BackgroundWorker();
-            this.PnlHeaderType = new System.Windows.Forms.FlowLayoutPanel();
+            this.panel3 = new System.Windows.Forms.Panel();
             this.panel1.SuspendLayout();
             this.PnlDropDownSections.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -58,6 +62,9 @@ namespace terrorism_gis_analysis
             // 
             this.panel1.AutoScroll = true;
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(30)))), ((int)(((byte)(54)))));
+            this.panel1.Controls.Add(this.panel3);
+            this.panel1.Controls.Add(this.PnlDropdownFilters);
+            this.panel1.Controls.Add(this.BtnFlters);
             this.panel1.Controls.Add(this.PnlDropDownSections);
             this.panel1.Controls.Add(this.BtnSections);
             this.panel1.Controls.Add(this.panel2);
@@ -66,6 +73,32 @@ namespace terrorism_gis_analysis
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(223, 613);
             this.panel1.TabIndex = 1;
+            // 
+            // PnlDropdownFilters
+            // 
+            this.PnlDropdownFilters.AutoScroll = true;
+            this.PnlDropdownFilters.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(51)))), ((int)(((byte)(73)))));
+            this.PnlDropdownFilters.Dock = System.Windows.Forms.DockStyle.Top;
+            this.PnlDropdownFilters.Location = new System.Drawing.Point(0, 275);
+            this.PnlDropdownFilters.Name = "PnlDropdownFilters";
+            this.PnlDropdownFilters.Size = new System.Drawing.Size(223, 303);
+            this.PnlDropdownFilters.TabIndex = 9;
+            // 
+            // BtnFlters
+            // 
+            this.BtnFlters.Dock = System.Windows.Forms.DockStyle.Top;
+            this.BtnFlters.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BtnFlters.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnFlters.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(156)))), ((int)(((byte)(149)))));
+            this.BtnFlters.Location = new System.Drawing.Point(0, 235);
+            this.BtnFlters.Name = "BtnFlters";
+            this.BtnFlters.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.BtnFlters.Size = new System.Drawing.Size(223, 40);
+            this.BtnFlters.TabIndex = 6;
+            this.BtnFlters.Text = "FILTERS";
+            this.BtnFlters.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.BtnFlters.UseVisualStyleBackColor = true;
+            this.BtnFlters.Click += new System.EventHandler(this.BtnFlters_Click);
             // 
             // PnlDropDownSections
             // 
@@ -95,6 +128,7 @@ namespace terrorism_gis_analysis
             this.BtnTable.Text = "Table";
             this.BtnTable.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.BtnTable.UseVisualStyleBackColor = true;
+            this.BtnTable.Click += new System.EventHandler(this.BtnTable_Click);
             // 
             // BtnCharts
             // 
@@ -112,6 +146,7 @@ namespace terrorism_gis_analysis
             this.BtnCharts.Text = "Charts";
             this.BtnCharts.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.BtnCharts.UseVisualStyleBackColor = true;
+            this.BtnCharts.Click += new System.EventHandler(this.BtnCharts_Click);
             // 
             // BtnMap
             // 
@@ -129,6 +164,7 @@ namespace terrorism_gis_analysis
             this.BtnMap.Text = "Map";
             this.BtnMap.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.BtnMap.UseVisualStyleBackColor = true;
+            this.BtnMap.Click += new System.EventHandler(this.BtnMap_Click);
             // 
             // BtnSections
             // 
@@ -141,7 +177,7 @@ namespace terrorism_gis_analysis
             this.BtnSections.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
             this.BtnSections.Size = new System.Drawing.Size(223, 40);
             this.BtnSections.TabIndex = 4;
-            this.BtnSections.Text = "Sections";
+            this.BtnSections.Text = "SECTIONS";
             this.BtnSections.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.BtnSections.UseVisualStyleBackColor = true;
             this.BtnSections.Click += new System.EventHandler(this.BtnSections_Click);
@@ -180,7 +216,7 @@ namespace terrorism_gis_analysis
             this.loadDataBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.loadDataBtn.Font = new System.Drawing.Font("Nirmala UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.loadDataBtn.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(126)))), ((int)(((byte)(249)))));
-            this.loadDataBtn.Location = new System.Drawing.Point(407, 204);
+            this.loadDataBtn.Location = new System.Drawing.Point(401, 204);
             this.loadDataBtn.Name = "loadDataBtn";
             this.loadDataBtn.Size = new System.Drawing.Size(86, 30);
             this.loadDataBtn.TabIndex = 2;
@@ -196,6 +232,7 @@ namespace terrorism_gis_analysis
             // PanelFormLoader
             // 
             this.PanelFormLoader.AutoScroll = true;
+            this.PanelFormLoader.Controls.Add(this.BtnReadTable);
             this.PanelFormLoader.Controls.Add(this.PnlHeaderType);
             this.PanelFormLoader.Controls.Add(this.LblPercentage);
             this.PanelFormLoader.Controls.Add(this.progressBar);
@@ -209,12 +246,38 @@ namespace terrorism_gis_analysis
             this.PanelFormLoader.Size = new System.Drawing.Size(918, 613);
             this.PanelFormLoader.TabIndex = 2;
             // 
+            // BtnReadTable
+            // 
+            this.BtnReadTable.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.BtnReadTable.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BtnReadTable.Font = new System.Drawing.Font("Nirmala UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnReadTable.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(126)))), ((int)(((byte)(249)))));
+            this.BtnReadTable.Location = new System.Drawing.Point(7, 520);
+            this.BtnReadTable.Name = "BtnReadTable";
+            this.BtnReadTable.Size = new System.Drawing.Size(893, 30);
+            this.BtnReadTable.TabIndex = 9;
+            this.BtnReadTable.Text = "Read Table";
+            this.BtnReadTable.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            this.BtnReadTable.UseVisualStyleBackColor = true;
+            this.BtnReadTable.Visible = false;
+            this.BtnReadTable.Click += new System.EventHandler(this.BtnReadTable_Click);
+            // 
+            // PnlHeaderType
+            // 
+            this.PnlHeaderType.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.PnlHeaderType.AutoScroll = true;
+            this.PnlHeaderType.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(51)))), ((int)(((byte)(73)))));
+            this.PnlHeaderType.Location = new System.Drawing.Point(7, 251);
+            this.PnlHeaderType.Name = "PnlHeaderType";
+            this.PnlHeaderType.Size = new System.Drawing.Size(893, 252);
+            this.PnlHeaderType.TabIndex = 8;
+            // 
             // LblPercentage
             // 
             this.LblPercentage.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.LblPercentage.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LblPercentage.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(126)))), ((int)(((byte)(249)))));
-            this.LblPercentage.Location = new System.Drawing.Point(851, 582);
+            this.LblPercentage.Location = new System.Drawing.Point(845, 582);
             this.LblPercentage.Name = "LblPercentage";
             this.LblPercentage.Size = new System.Drawing.Size(35, 20);
             this.LblPercentage.TabIndex = 7;
@@ -226,7 +289,7 @@ namespace terrorism_gis_analysis
             this.progressBar.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.progressBar.Cursor = System.Windows.Forms.Cursors.No;
             this.progressBar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(126)))), ((int)(((byte)(249)))));
-            this.progressBar.Location = new System.Drawing.Point(13, 582);
+            this.progressBar.Location = new System.Drawing.Point(7, 582);
             this.progressBar.Name = "progressBar";
             this.progressBar.Size = new System.Drawing.Size(831, 23);
             this.progressBar.TabIndex = 6;
@@ -240,7 +303,7 @@ namespace terrorism_gis_analysis
             this.richTextBox1.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.richTextBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.richTextBox1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(158)))), ((int)(((byte)(161)))), ((int)(((byte)(178)))));
-            this.richTextBox1.Location = new System.Drawing.Point(13, 115);
+            this.richTextBox1.Location = new System.Drawing.Point(7, 115);
             this.richTextBox1.Name = "richTextBox1";
             this.richTextBox1.ReadOnly = true;
             this.richTextBox1.Size = new System.Drawing.Size(852, 83);
@@ -253,7 +316,7 @@ namespace terrorism_gis_analysis
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft JhengHei", 48F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(156)))), ((int)(((byte)(149)))));
-            this.label2.Location = new System.Drawing.Point(260, 21);
+            this.label2.Location = new System.Drawing.Point(254, 21);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(428, 81);
             this.label2.TabIndex = 4;
@@ -267,15 +330,13 @@ namespace terrorism_gis_analysis
             this.BkgWorkerDataReader.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.BkgWorkerDataReader_ProgressChanged);
             this.BkgWorkerDataReader.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.BkgWorkerDataReader_RunWorkerCompleted);
             // 
-            // PnlHeaderType
+            // panel3
             // 
-            this.PnlHeaderType.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.PnlHeaderType.AutoScroll = true;
-            this.PnlHeaderType.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(51)))), ((int)(((byte)(73)))));
-            this.PnlHeaderType.Location = new System.Drawing.Point(13, 251);
-            this.PnlHeaderType.Name = "PnlHeaderType";
-            this.PnlHeaderType.Size = new System.Drawing.Size(893, 252);
-            this.PnlHeaderType.TabIndex = 8;
+            this.panel3.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel3.Location = new System.Drawing.Point(0, 578);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(223, 35);
+            this.panel3.TabIndex = 10;
             // 
             // MainForm
             // 
@@ -320,6 +381,10 @@ namespace terrorism_gis_analysis
         private System.Windows.Forms.Button BtnCharts;
         private System.Windows.Forms.Button BtnMap;
         private System.Windows.Forms.FlowLayoutPanel PnlHeaderType;
+        private System.Windows.Forms.Button BtnReadTable;
+        private System.Windows.Forms.Panel PnlDropdownFilters;
+        private System.Windows.Forms.Button BtnFlters;
+        private System.Windows.Forms.Panel panel3;
     }
 }
 

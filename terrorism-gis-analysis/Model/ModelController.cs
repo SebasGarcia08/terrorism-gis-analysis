@@ -25,14 +25,16 @@ namespace terrorism_gis_analysis.Model
             return report.GetHeaders();
         }
 
-        public void ReadHeaders(string FilePath)
+        public string[] ReadHeaders(string FilePath)
         {
             report.ReadHeaders(FilePath);
+            return report.GetHeaders();
         }
 
         public void ReadTable(BackgroundWorker bkgWorker, Dictionary<string, string> header2Type)
         {
-            report.ReadTable(bkgWorker, header2Type);
+            report.SetColumTypes(header2Type);
+            report.ReadTable(bkgWorker);
         }
 
         public DataRow[] Filter()
@@ -53,7 +55,11 @@ namespace terrorism_gis_analysis.Model
             }
 
             return exp;
+        }
 
+        public DataTable GetDataTable()
+        {
+            return report.GetDataTable();
         }
     }
 }

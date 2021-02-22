@@ -28,5 +28,15 @@ namespace terrorism_gis_analysis.Controller
             return MController.GetHeaders();
         }
 
+        public DataTable ReadAndGetReport(BackgroundWorker BkgWorker, Dictionary<string, string> Col2Type)
+        {
+            MController.ReadTable(BkgWorker, Col2Type);
+            return MController.GetDataTable();
+        }
+
+        public DataTable GetDataTable()
+        {
+            return MController.GetDataTable();
+        }
     }
 }

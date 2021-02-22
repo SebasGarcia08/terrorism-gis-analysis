@@ -33,7 +33,7 @@ namespace terrorism_gis_analysis.UI
                 return AppController.STRING;
         }
 
-        public bool UseInToolTip()
+        public bool IsUsedInToolTip()
         {
             return ChBoxToolTip.Checked;
         }

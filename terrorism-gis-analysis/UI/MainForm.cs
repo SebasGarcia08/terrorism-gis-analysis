@@ -28,6 +28,10 @@ namespace terrorism_gis_analysis
         private ChartsForm ChartsForm;
         private TableForm TableForm;
 
+        private List<HeaderTypeSelector> HeaderTypes;
+        private Dictionary<string, string> Col2Type;
+        private List<string> ColsInToolTip;
+
         /// <summary>
         /// Round corners
         /// </summary>
@@ -54,12 +58,16 @@ namespace terrorism_gis_analysis
             this.MapForm = new MapForm() { Dock = DockStyle.Fill, TopLevel = false, TopMost = true };
             this.ChartsForm = new ChartsForm() { Dock = DockStyle.Fill, TopLevel = false, TopMost = true };
             this.TableForm = new TableForm() { Dock = DockStyle.Fill, TopLevel = false, TopMost = true };
- //           ConfigureInitialState();
+            HeaderTypes = new List<HeaderTypeSelector>();
+            Col2Type = new Dictionary<string, string>();
+            ColsInToolTip = new List<string>();
+            ConfigureInitialState();
         }
 
         public void ConfigureInitialState()
         {
             PnlDropDownSections.Visible = false;
+            PnlDropdownFilters.Visible = false;
             BtnCharts.Enabled = false;
             BtnMap.Enabled = false;
             BtnTable.Enabled = false;
@@ -70,6 +78,7 @@ namespace terrorism_gis_analysis
             ShowSubMenu(PnlDropDownSections);
             BtnCharts.Enabled = true;
             BtnMap.Enabled = true;
+            BtnTable.Enabled = true;
         }
 
         public void HideSubMenu(Panel SubMenu)
@@ -99,6 +108,12 @@ namespace terrorism_gis_analysis
             ShowSubMenu(PnlDropDownSections);
         }
 
+        private void BtnFlters_Click(object sender, EventArgs e)
+        {
+            ShowSubMenu(PnlDropdownFilters);
+        }
+
+
         private void LoadForm(Form form)
         {
             this.PanelFormLoader.Controls.Clear();
@@ -113,6 +128,7 @@ namespace terrorism_gis_analysis
             {
                 string[] Columns = Controller.ReadAndGetColumns(openFileDialog.FileName);
                 ShowHeaders(Columns);
+                BtnReadTable.Visible = true;
             }
         }
 
@@ -121,17 +137,18 @@ namespace terrorism_gis_analysis
             // TODO: Show columns on UI in order to make the user specify the type of each one
             foreach(string col in Columns)
             {
-                Form objForm = new HeaderTypeSelector(col) {  TopLevel = false};
+                HeaderTypeSelector objForm = new HeaderTypeSelector(col) {  TopLevel = false};
                 this.PnlHeaderType.Controls.Add(objForm);
                 objForm.BringToFront();
                 Console.WriteLine(col);
                 objForm.Show();
+                HeaderTypes.Add(objForm);
             }
         }
 
         public void BkgWorkerDataReader_DoWork(object sender, DoWorkEventArgs e)  
-        { 
-
+        {
+            Controller.ReadAndGetReport(BkgWorkerDataReader, Col2Type);
         }
 
         private void BkgWorkerDataReader_ProgressChanged(object sender, ProgressChangedEventArgs e)
@@ -140,7 +157,7 @@ namespace terrorism_gis_analysis
             progressBar.Value = e.ProgressPercentage;
 
             // Change the value of the ProgressBar to the BackgroundWorker progress.
-            LblPercentage.Text = e.ProgressPercentage.ToString();
+            LblPercentage.Text = e.ProgressPercentage.ToString()+"%";
         }
 
         private void BkgWorkerDataReader_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) 
@@ -148,6 +165,38 @@ namespace terrorism_gis_analysis
             ReadingDataOKControls();
             progressBar.Visible = false;
             LblPercentage.Visible = false;
+            DataTable dt = Controller.GetDataTable();
+            MapForm.SetDabatase(dt);
+            MapForm.SetColsInToolTips(ColsInToolTip);
+            TableForm.SetDataSource(dt);
+        }
+
+        private void BtnReadTable_Click(object sender, EventArgs e)
+        {
+            foreach(HeaderTypeSelector headerTypeForm in HeaderTypes)
+            {
+                if(headerTypeForm.IsUsedInToolTip())
+                    ColsInToolTip.Add(headerTypeForm.GetName());
+                Col2Type.Add(headerTypeForm.GetName(), headerTypeForm.GetTypeSelected());
+            }
+            this.progressBar.Visible = true;
+            this.LblPercentage.Visible = true;
+            BkgWorkerDataReader.RunWorkerAsync();
+        }
+
+        private void BtnMap_Click(object sender, EventArgs e)
+        {
+            LoadForm(MapForm);
+        }
+
+        private void BtnCharts_Click(object sender, EventArgs e)
+        {
+            LoadForm(ChartsForm);
+        }
+
+        private void BtnTable_Click(object sender, EventArgs e)
+        {
+            LoadForm(TableForm);
         }
     }
 }
