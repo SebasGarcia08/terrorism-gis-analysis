@@ -34,6 +34,9 @@ namespace terrorism_gis_analysis
             // 
             // gmap
             // 
+            this.gmap.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.gmap.Bearing = 0F;
             this.gmap.CanDragMap = true;
             this.gmap.EmptyTileColor = System.Drawing.Color.Navy;
@@ -41,7 +44,6 @@ namespace terrorism_gis_analysis
             this.gmap.HelperLineOption = GMap.NET.WindowsForms.HelperLineOptions.DontShow;
             this.gmap.LevelsKeepInMemmory = 5;
             this.gmap.Location = new System.Drawing.Point(-1, 0);
-            this.gmap.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.gmap.MarkersEnabled = true;
             this.gmap.MaxZoom = 20;
             this.gmap.MinZoom = 2;
@@ -55,18 +57,17 @@ namespace terrorism_gis_analysis
             this.gmap.ScaleMode = GMap.NET.WindowsForms.ScaleModes.Integer;
             this.gmap.SelectedAreaFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(65)))), ((int)(((byte)(105)))), ((int)(((byte)(225)))));
             this.gmap.ShowTileGridLines = false;
-            this.gmap.Size = new System.Drawing.Size(1219, 754);
+            this.gmap.Size = new System.Drawing.Size(914, 613);
             this.gmap.TabIndex = 0;
             this.gmap.Zoom = 13D;
             // 
             // MapForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1219, 754);
+            this.ClientSize = new System.Drawing.Size(914, 613);
             this.Controls.Add(this.gmap);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "MapForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Gmaps";

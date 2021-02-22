@@ -32,27 +32,10 @@ namespace terrorism_gis_analysis
         private Dictionary<string, string> Col2Type;
         private List<string> ColsInToolTip;
 
-        /// <summary>
-        /// Round corners
-        /// </summary>
-        [DllImport("Gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
-
-        private static extern IntPtr CreateRoundRectRgn
-         (
-              int nLeftRect,
-              int nTopRect,
-              int nRightRect,
-              int nBottomRect,
-              int nWidthEllipse,
-              int nHeightEllipse
-         );
-
         public MainForm()
         {
             InitializeComponent();
-            
-            Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, Width, Height, 30, 30));
-            
+                        
             this.Controller = new AppController();
 
             this.MapForm = new MapForm() { Dock = DockStyle.Fill, TopLevel = false, TopMost = true };

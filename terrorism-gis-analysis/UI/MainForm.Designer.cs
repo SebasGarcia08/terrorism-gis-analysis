@@ -31,6 +31,7 @@ namespace terrorism_gis_analysis
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.panel1 = new System.Windows.Forms.Panel();
+            this.panel3 = new System.Windows.Forms.Panel();
             this.PnlDropdownFilters = new System.Windows.Forms.Panel();
             this.BtnFlters = new System.Windows.Forms.Button();
             this.PnlDropDownSections = new System.Windows.Forms.Panel();
@@ -51,7 +52,6 @@ namespace terrorism_gis_analysis
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.BkgWorkerDataReader = new System.ComponentModel.BackgroundWorker();
-            this.panel3 = new System.Windows.Forms.Panel();
             this.panel1.SuspendLayout();
             this.PnlDropDownSections.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -74,11 +74,19 @@ namespace terrorism_gis_analysis
             this.panel1.Size = new System.Drawing.Size(223, 613);
             this.panel1.TabIndex = 1;
             // 
+            // panel3
+            // 
+            this.panel3.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel3.Location = new System.Drawing.Point(0, 578);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(223, 35);
+            this.panel3.TabIndex = 10;
+            // 
             // PnlDropdownFilters
             // 
+            this.PnlDropdownFilters.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
             this.PnlDropdownFilters.AutoScroll = true;
             this.PnlDropdownFilters.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(51)))), ((int)(((byte)(73)))));
-            this.PnlDropdownFilters.Dock = System.Windows.Forms.DockStyle.Top;
             this.PnlDropdownFilters.Location = new System.Drawing.Point(0, 275);
             this.PnlDropdownFilters.Name = "PnlDropdownFilters";
             this.PnlDropdownFilters.Size = new System.Drawing.Size(223, 303);
@@ -248,7 +256,7 @@ namespace terrorism_gis_analysis
             // 
             // BtnReadTable
             // 
-            this.BtnReadTable.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.BtnReadTable.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.BtnReadTable.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnReadTable.Font = new System.Drawing.Font("Nirmala UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BtnReadTable.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(126)))), ((int)(((byte)(249)))));
@@ -264,7 +272,7 @@ namespace terrorism_gis_analysis
             // 
             // PnlHeaderType
             // 
-            this.PnlHeaderType.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.PnlHeaderType.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
             this.PnlHeaderType.AutoScroll = true;
             this.PnlHeaderType.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(51)))), ((int)(((byte)(73)))));
             this.PnlHeaderType.Location = new System.Drawing.Point(7, 251);
@@ -330,14 +338,6 @@ namespace terrorism_gis_analysis
             this.BkgWorkerDataReader.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.BkgWorkerDataReader_ProgressChanged);
             this.BkgWorkerDataReader.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.BkgWorkerDataReader_RunWorkerCompleted);
             // 
-            // panel3
-            // 
-            this.panel3.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel3.Location = new System.Drawing.Point(0, 578);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(223, 35);
-            this.panel3.TabIndex = 10;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -347,7 +347,6 @@ namespace terrorism_gis_analysis
             this.ClientSize = new System.Drawing.Size(1141, 613);
             this.Controls.Add(this.PanelFormLoader);
             this.Controls.Add(this.panel1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
