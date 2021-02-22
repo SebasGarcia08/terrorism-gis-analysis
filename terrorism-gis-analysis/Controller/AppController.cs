@@ -19,9 +19,11 @@ namespace terrorism_gis_analysis.Controller
 
         public void ReadCSV(string filePath, BackgroundWorker bkgWorker)
         {
+            char[] separator = new char[] { '\t' };
+
             this.dt = new DataTable();
             string[] lines = File.ReadAllLines(filePath);
-            string[] headers = lines[0].Split(new char[] { ',' });
+            string[] headers = lines[0].Split(separator);
 
             // Lowercase column names
             for (int i = 0; i < headers.GetLength(0); i++)
@@ -40,7 +42,7 @@ namespace terrorism_gis_analysis.Controller
 
             for (int i = 1; i < lines.GetLength(0); i++)
             {
-                Fields = lines[i].Split(new char[] { ',' });
+                Fields = lines[i].Split(separator);
                 if (Fields.GetLength(0) == numCols)
                 {
                     Row = dt.NewRow();
@@ -52,6 +54,8 @@ namespace terrorism_gis_analysis.Controller
                 int progress = (int) Math.Ceiling((linesRead / numLines) * 100);
                 bkgWorker.ReportProgress(progress);
             }
+
+            Console.WriteLine(dt.Select().Length);
         }
 
         public DataTable GetDataTable()

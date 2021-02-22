@@ -88,6 +88,7 @@ namespace terrorism_gis_analysis
             LblPercentage.Visible = false;
             TableForm.setDataSource(Controller.GetDataTable());
             MapForm.SetDabatase(Controller.GetDataTable());
+            ChartsForm.setDataBase(Controller.GetDataTable());
         }
     }
 }

@@ -41,7 +41,7 @@ namespace terrorism_gis_analysis
             this.gmap.HelperLineOption = GMap.NET.WindowsForms.HelperLineOptions.DontShow;
             this.gmap.LevelsKeepInMemmory = 5;
             this.gmap.Location = new System.Drawing.Point(-1, 0);
-            this.gmap.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.gmap.Margin = new System.Windows.Forms.Padding(4);
             this.gmap.MarkersEnabled = true;
             this.gmap.MaxZoom = 20;
             this.gmap.MinZoom = 2;
@@ -66,7 +66,7 @@ namespace terrorism_gis_analysis
             this.ClientSize = new System.Drawing.Size(1219, 754);
             this.Controls.Add(this.gmap);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "MapForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Gmaps";

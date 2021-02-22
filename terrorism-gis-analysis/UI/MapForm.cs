@@ -44,7 +44,7 @@ namespace terrorism_gis_analysis
             {
                 PointLatLng p = points[i];
                 GMapMarker marker = new GMarkerGoogle(p, GMarkerGoogleType.red_dot);
-                marker.ToolTipText = p.Lat + "\n" + p.Lng + "\n" + (string)db.Rows[i]["iyear"] + "/" + (string)db.Rows[i]["imonth"] + "/" + (string)db.Rows[i]["iday"] + "\n" + (string)db.Rows[i]["attacktype1_txt"];
+                marker.ToolTipText = (string)db.Rows[i]["iyear"] + "/" + (string)db.Rows[i]["imonth"] + "/" + (string)db.Rows[i]["iday"] + "\n" + (string)db.Rows[i]["attacktype1_txt"];
                 markers.Markers.Add(marker);
             }
         }
