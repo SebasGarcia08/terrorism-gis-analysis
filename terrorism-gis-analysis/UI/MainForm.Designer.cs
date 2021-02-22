@@ -84,12 +84,12 @@ namespace terrorism_gis_analysis
             // 
             // PnlDropdownFilters
             // 
-            this.PnlDropdownFilters.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
             this.PnlDropdownFilters.AutoScroll = true;
             this.PnlDropdownFilters.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(51)))), ((int)(((byte)(73)))));
+            this.PnlDropdownFilters.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PnlDropdownFilters.Location = new System.Drawing.Point(0, 275);
             this.PnlDropdownFilters.Name = "PnlDropdownFilters";
-            this.PnlDropdownFilters.Size = new System.Drawing.Size(223, 303);
+            this.PnlDropdownFilters.Size = new System.Drawing.Size(223, 338);
             this.PnlDropdownFilters.TabIndex = 9;
             // 
             // BtnFlters

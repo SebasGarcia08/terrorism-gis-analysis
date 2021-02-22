@@ -29,26 +29,15 @@ namespace terrorism_gis_analysis.UI
         /// </summary>
         private void InitializeComponent()
         {
-            this.label1 = new System.Windows.Forms.Label();
             this.GBoxColType = new System.Windows.Forms.GroupBox();
             this.RBtnCategorical = new System.Windows.Forms.RadioButton();
             this.RBtnString = new System.Windows.Forms.RadioButton();
             this.RBtnNumerical = new System.Windows.Forms.RadioButton();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.CBoxVariables = new System.Windows.Forms.ComboBox();
+            this.PnlOptionFilterer = new System.Windows.Forms.Panel();
+            this.BtnAddFilter = new System.Windows.Forms.Button();
             this.GBoxColType.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(126)))), ((int)(((byte)(249)))));
-            this.label1.Location = new System.Drawing.Point(79, 6);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(72, 20);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Add filter";
             // 
             // GBoxColType
             // 
@@ -58,7 +47,7 @@ namespace terrorism_gis_analysis.UI
             this.GBoxColType.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.GBoxColType.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.GBoxColType.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(158)))), ((int)(((byte)(161)))), ((int)(((byte)(178)))));
-            this.GBoxColType.Location = new System.Drawing.Point(12, 29);
+            this.GBoxColType.Location = new System.Drawing.Point(12, 12);
             this.GBoxColType.Name = "GBoxColType";
             this.GBoxColType.Size = new System.Drawing.Size(199, 64);
             this.GBoxColType.TabIndex = 7;
@@ -78,6 +67,7 @@ namespace terrorism_gis_analysis.UI
             this.RBtnCategorical.TabStop = true;
             this.RBtnCategorical.Text = "Categorical";
             this.RBtnCategorical.UseVisualStyleBackColor = true;
+            this.RBtnCategorical.CheckedChanged += new System.EventHandler(this.RBtnCategorical_CheckedChanged);
             // 
             // RBtnString
             // 
@@ -93,6 +83,7 @@ namespace terrorism_gis_analysis.UI
             this.RBtnString.TabStop = true;
             this.RBtnString.Text = "String";
             this.RBtnString.UseVisualStyleBackColor = true;
+            this.RBtnString.CheckedChanged += new System.EventHandler(this.RBtnString_CheckedChanged);
             // 
             // RBtnNumerical
             // 
@@ -107,50 +98,64 @@ namespace terrorism_gis_analysis.UI
             this.RBtnNumerical.TabStop = true;
             this.RBtnNumerical.Text = "Numerical";
             this.RBtnNumerical.UseVisualStyleBackColor = true;
+            this.RBtnNumerical.CheckedChanged += new System.EventHandler(this.RBtnNumerical_CheckedChanged);
             // 
-            // comboBox1
+            // CBoxVariables
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(12, 108);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(199, 21);
-            this.comboBox1.TabIndex = 8;
+            this.CBoxVariables.FormattingEnabled = true;
+            this.CBoxVariables.Location = new System.Drawing.Point(12, 82);
+            this.CBoxVariables.Name = "CBoxVariables";
+            this.CBoxVariables.Size = new System.Drawing.Size(199, 21);
+            this.CBoxVariables.TabIndex = 8;
             // 
-            // panel1
+            // PnlOptionFilterer
             // 
-            this.panel1.Location = new System.Drawing.Point(12, 135);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(199, 46);
-            this.panel1.TabIndex = 9;
+            this.PnlOptionFilterer.Location = new System.Drawing.Point(12, 109);
+            this.PnlOptionFilterer.Name = "PnlOptionFilterer";
+            this.PnlOptionFilterer.Size = new System.Drawing.Size(199, 46);
+            this.PnlOptionFilterer.TabIndex = 9;
+            // 
+            // BtnAddFilter
+            // 
+            this.BtnAddFilter.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.BtnAddFilter.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BtnAddFilter.Font = new System.Drawing.Font("Nirmala UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnAddFilter.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(126)))), ((int)(((byte)(249)))));
+            this.BtnAddFilter.Location = new System.Drawing.Point(64, 167);
+            this.BtnAddFilter.Name = "BtnAddFilter";
+            this.BtnAddFilter.Size = new System.Drawing.Size(86, 30);
+            this.BtnAddFilter.TabIndex = 10;
+            this.BtnAddFilter.Text = "Add Filter";
+            this.BtnAddFilter.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            this.BtnAddFilter.UseVisualStyleBackColor = true;
+            this.BtnAddFilter.Click += new System.EventHandler(this.BtnAddFilter_Click);
             // 
             // FilterMakerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(51)))), ((int)(((byte)(73)))));
-            this.ClientSize = new System.Drawing.Size(223, 226);
-            this.Controls.Add(this.panel1);
-            this.Controls.Add(this.comboBox1);
+            this.ClientSize = new System.Drawing.Size(223, 209);
+            this.Controls.Add(this.BtnAddFilter);
+            this.Controls.Add(this.PnlOptionFilterer);
+            this.Controls.Add(this.CBoxVariables);
             this.Controls.Add(this.GBoxColType);
-            this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "FilterMakerForm";
             this.Text = "Form1";
             this.GBoxColType.ResumeLayout(false);
             this.GBoxColType.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox GBoxColType;
         private System.Windows.Forms.RadioButton RBtnCategorical;
         private System.Windows.Forms.RadioButton RBtnString;
         private System.Windows.Forms.RadioButton RBtnNumerical;
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.ComboBox CBoxVariables;
+        private System.Windows.Forms.Panel PnlOptionFilterer;
+        private System.Windows.Forms.Button BtnAddFilter;
     }
 }
