@@ -50,16 +50,22 @@ namespace terrorism_gis_analysis.UI
         {
             if(CurrSelection != null)
             {
+
                 if (CurrSelection.Equals(AppController.CATEGORICAL))
                 {
-                    
-                } else if (CurrSelection.Equals(AppController.STRING))
+                       
+                } 
+                else if (CurrSelection.Equals(AppController.STRING))
                 {
 
-                } else
+                } 
+                else
                 {
 
                 }
+            } else
+            {
+                filter = null;
             }
         }
 
