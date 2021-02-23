@@ -11,47 +11,47 @@ namespace terrorism_gis_analysis.Model
     public class ModelController
     {
 
-        private List<Filter> filters;
-        private Report report;
+        private List<Filter> Filters { set; get; }
+        private Report Report { set; get; }
 
         public ModelController()
         {
-            report = new Report();
-            filters = new List<Filter>();
+            Report = new Report();
+            Filters = new List<Filter>();
         }
 
         public string[] GetHeaders()
         {
-            return report.GetHeaders();
+            return Report.GetHeaders();
         }
 
         public string[] ReadHeaders(string FilePath)
         {
-            report.ReadHeaders(FilePath);
-            return report.GetHeaders();
+            Report.ReadHeaders(FilePath);
+            return Report.GetHeaders();
         }
 
         public void ReadTable(BackgroundWorker bkgWorker, Dictionary<string, string> header2Type)
         {
-            report.SetColumTypes(header2Type);
-            report.ReadTable(bkgWorker);
+            Report.InitializeColumnTypes(header2Type);
+            Report.ReadTable(bkgWorker);
         }
 
         public DataRow[] Filter()
         {
-            return report.FilterTable(GetFilterExpression());
+            return Report.FilterTable(GetFilterExpression());
         }
 
         public string GetFilterExpression()
         {
             string exp = "";
             
-            for(int i=0; i<filters.Count; i++)
+            for(int i=0; i<Filters.Count; i++)
             {
-                if (i < filters.Count - 1)
-                    exp += filters[i].GetFilterExpression() + " AND ";
+                if (i < Filters.Count - 1)
+                    exp += Filters[i].GetFilterExpression() + " AND ";
                 else
-                    exp += filters[i];
+                    exp += Filters[i];
             }
 
             return exp;
@@ -59,7 +59,17 @@ namespace terrorism_gis_analysis.Model
 
         public DataTable GetDataTable()
         {
-            return report.GetDataTable();
+            return Report.GetDataTable();
+        }
+
+        public Dictionary<string, string> GetColumnTypes()
+        {
+            return Report.ColumnTypes;
+        }
+
+        public Dictionary<string, HashSet<string>> GetCol2Categorical()
+        {
+            return Report.ColumnCategoricalValues;
         }
     }
 }

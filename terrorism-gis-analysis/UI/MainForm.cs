@@ -18,15 +18,17 @@ namespace terrorism_gis_analysis
     public partial class MainForm : Form
     {
 
-        public readonly string TABLE = "Table";
-        public readonly string MAP = "Map";
-        public readonly string CHARTS = "Charts";
+        public const string TABLE = "Table";
+        public const string MAP = "Map";
+        public const string CHARTS = "Charts";
 
-        private AppController Controller;
+        private readonly AppController Controller;
 
-        private MapForm MapForm;
-        private ChartsForm ChartsForm;
-        private TableForm TableForm;
+        private readonly MapForm MapForm;
+        private readonly ChartsForm ChartsForm;
+        private readonly TableForm TableForm;
+        
+        private  FilterMakerForm Filterer;
 
         private List<HeaderTypeSelector> HeaderTypes;
         private Dictionary<string, string> Col2Type;
@@ -35,19 +37,20 @@ namespace terrorism_gis_analysis
         public MainForm()
         {
             InitializeComponent();
-                        
-            this.Controller = new AppController();
 
+            this.Controller = new AppController(this);
             this.MapForm = new MapForm() { Dock = DockStyle.Fill, TopLevel = false, TopMost = true };
             this.ChartsForm = new ChartsForm() { Dock = DockStyle.Fill, TopLevel = false, TopMost = true };
             this.TableForm = new TableForm() { Dock = DockStyle.Fill, TopLevel = false, TopMost = true };
+            
             HeaderTypes = new List<HeaderTypeSelector>();
             Col2Type = new Dictionary<string, string>();
             ColsInToolTip = new List<string>();
             ConfigureInitialState();
         }
 
-        public void ConfigureInitialState()
+        #region GUIMethods
+        private void ConfigureInitialState()
         {
             PnlDropDownSections.Visible = false;
             PnlDropdownFilters.Visible = false;
@@ -56,36 +59,67 @@ namespace terrorism_gis_analysis
             BtnTable.Enabled = false;
         }
 
-        public void ReadingDataOKControls()
+        private void ReadDataSuccess()
         {
+            LoadFilterMaker();
             ShowSubMenu(PnlDropDownSections);
+            ShowSubMenu(PnlDropdownFilters);
             BtnCharts.Enabled = true;
             BtnMap.Enabled = true;
             BtnTable.Enabled = true;
         }
 
-        public void HideSubMenu(Panel SubMenu)
+        private void LoadFilterMaker()
         {
-            if (SubMenu.Visible)
-                SubMenu.Visible = false;
+            this.Filterer = Controller.CreateFiltererMaker();
+            this.PnlDropdownFilters.Controls.Add(Filterer);
+            Filterer.BringToFront();
+            Filterer.Show();
+        }
+        
+        private void HideSubMenu(Panel subMenu)
+        {
+            if (subMenu.Visible) subMenu.Visible = false;
         }
 
-        public void ShowSubMenu(Panel SubMenu)
+        private void ShowSubMenu(Panel subMenu)
         {
-            if (!SubMenu.Visible)
+            if (!subMenu.Visible)
             {
-                HideSubMenu(SubMenu);
-                SubMenu.Visible = true;
+                HideSubMenu(subMenu);
+                subMenu.Visible = true;
             }
             else
-            {
-                SubMenu.Visible = false;
-            }
+                subMenu.Visible = false;
         }
 
+        private void LoadForm(Form form)
+        {
+            PanelFormLoader.Controls.Clear();
+            form.FormBorderStyle = FormBorderStyle.None;
+            PanelFormLoader.Controls.Add(form);
+            form.Show();
+        }
+
+        private void ShowHeaders(string[] columns)
+        {
+            foreach(string col in columns)
+            {
+                HeaderTypeSelector objForm = new HeaderTypeSelector(col) {  TopLevel = false};
+                PnlHeaderType.Controls.Add(objForm);
+                objForm.BringToFront();
+                Console.WriteLine(col);
+                objForm.Show();
+                HeaderTypes.Add(objForm);
+            }
+        }
+        #endregion
+
+        #region Events
         /// <summary>
         /// Events
         /// </summary>
+
         private void BtnSections_Click(object sender, EventArgs e)
         {
             ShowSubMenu(PnlDropDownSections);
@@ -95,41 +129,18 @@ namespace terrorism_gis_analysis
         {
             ShowSubMenu(PnlDropdownFilters);
         }
-
-
-        private void LoadForm(Form form)
-        {
-            this.PanelFormLoader.Controls.Clear();
-            form.FormBorderStyle = FormBorderStyle.None;
-            this.PanelFormLoader.Controls.Add(form);
-            form.Show();
-        }
-
+        
         private void LoadDataBtn_Click(object sender, EventArgs e)
         {
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                string[] Columns = Controller.ReadAndGetColumns(openFileDialog.FileName);
-                ShowHeaders(Columns);
+                var columns = Controller.ReadAndGetColumns(openFileDialog.FileName);
+                ShowHeaders(columns);
                 BtnReadTable.Visible = true;
             }
         }
 
-        public void ShowHeaders(string[] Columns)
-        {
-            // TODO: Show columns on UI in order to make the user specify the type of each one
-            foreach(string col in Columns)
-            {
-                HeaderTypeSelector objForm = new HeaderTypeSelector(col) {  TopLevel = false};
-                this.PnlHeaderType.Controls.Add(objForm);
-                objForm.BringToFront();
-                Console.WriteLine(col);
-                objForm.Show();
-                HeaderTypes.Add(objForm);
-            }
-        }
-
-        public void BkgWorkerDataReader_DoWork(object sender, DoWorkEventArgs e)  
+        private void BkgWorkerDataReader_DoWork(object sender, DoWorkEventArgs e)  
         {
             Controller.ReadAndGetReport(BkgWorkerDataReader, Col2Type);
         }
@@ -140,30 +151,33 @@ namespace terrorism_gis_analysis
             progressBar.Value = e.ProgressPercentage;
 
             // Change the value of the ProgressBar to the BackgroundWorker progress.
-            LblPercentage.Text = e.ProgressPercentage.ToString()+"%";
+            LblPercentage.Text = e.ProgressPercentage + "%";
         }
 
         private void BkgWorkerDataReader_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) 
         {
-            ReadingDataOKControls();
+            ReadDataSuccess();
             progressBar.Visible = false;
             LblPercentage.Visible = false;
             DataTable dt = Controller.GetDataTable();
             MapForm.SetDabatase(dt);
             MapForm.SetColsInToolTips(ColsInToolTip);
             TableForm.SetDataSource(dt);
+            ChartsForm.setDataBase(dt);
+            BtnReadTable.Enabled = false;
         }
 
         private void BtnReadTable_Click(object sender, EventArgs e)
         {
-            foreach(HeaderTypeSelector headerTypeForm in HeaderTypes)
+            Col2Type = new Dictionary<string, string>();
+            foreach (HeaderTypeSelector headerTypeForm in HeaderTypes)
             {
                 if(headerTypeForm.IsUsedInToolTip())
                     ColsInToolTip.Add(headerTypeForm.GetName());
                 Col2Type.Add(headerTypeForm.GetName(), headerTypeForm.GetTypeSelected());
             }
-            this.progressBar.Visible = true;
-            this.LblPercentage.Visible = true;
+            progressBar.Visible = true;
+            LblPercentage.Visible = true;
             BkgWorkerDataReader.RunWorkerAsync();
         }
 
@@ -181,5 +195,6 @@ namespace terrorism_gis_analysis
         {
             LoadForm(TableForm);
         }
+        #endregion 
     }
 }

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using terrorism_gis_analysis.Controller;
 using terrorism_gis_analysis.Model;
-
+using System.Diagnostics;
 
 namespace terrorism_gis_analysis.UI
 {
@@ -17,56 +17,56 @@ namespace terrorism_gis_analysis.UI
     {
         private Dictionary<string, string> Variables2Type;
         private Dictionary<string, HashSet<string>> Col2Categorical;
-        private Filter filter;
-        
+
         // String filter
-        TextBox txtBox;
+        private readonly TextBox txtBox;
 
         // Numerical
-        NumericUpDown min;
-        NumericUpDown max;
-
+        private readonly NumericUpDown numericMin;
+        private readonly NumericUpDown numericMax;
+        
         // Categorical
-        ComboBox CBoxCategorical;
+        private readonly ComboBox CBoxCategorical;
 
         string CurrSelection;
 
-        public FilterMakerForm()
+        public FilterMakerForm(Dictionary<string, string> variables2Type, Dictionary<string, HashSet<string>> col2Categorical)
         {
             InitializeComponent();
-            this.min = new NumericUpDown() { Dock = DockStyle.Left };
-            this.max = new NumericUpDown() { Dock = DockStyle.Right };
-            this.txtBox = new TextBox();
-            this.CBoxCategorical = new ComboBox();
-        }
-
-        public void SetVAriables(Dictionary<string, string> vars, Dictionary<string, HashSet<string>> Col2Categorical)
-        {
-            this.Variables2Type = vars;
-            this.Col2Categorical = Col2Categorical;
+            numericMin = new NumericUpDown() { Anchor = AnchorStyles.Top, Dock = DockStyle.Top, 
+                Minimum = Decimal.MinValue, Maximum =  Decimal.MaxValue};
+            numericMax = new NumericUpDown() { Anchor = AnchorStyles.Bottom, Dock = DockStyle.Bottom, 
+                Minimum = Decimal.MinValue, Maximum =  Decimal.MaxValue};
+            txtBox = new TextBox() { Anchor = AnchorStyles.Right, Dock = DockStyle.Top};
+            CBoxCategorical = new ComboBox() { Anchor = AnchorStyles.Right, Dock = DockStyle.Top };
+            TopLevel = false;
+            Variables2Type = variables2Type;
+            Col2Categorical = col2Categorical;
         }
 
         private void BtnAddFilter_Click(object sender, EventArgs e)
         {
             if(CurrSelection != null)
             {
-
+                string column = GetVariableSelected();
+                string param;
                 if (CurrSelection.Equals(AppController.CATEGORICAL))
                 {
-                       
-                } 
+                    param = (string) CBoxCategorical.Items[CBoxCategorical.SelectedIndex];
+                    CategoricalFilter CatFilter = new CategoricalFilter(column, new string[] { param });
+                }
                 else if (CurrSelection.Equals(AppController.STRING))
                 {
-
+                    param = txtBox.Text;
+                    StringFilter filter = new StringFilter(column, param);
                 } 
                 else
                 {
-
+                    int min = (int) numericMin.Value;
+                    int max = (int) numericMax.Value;
+                    NumberFilter filter = new NumberFilter(column, min, max);
                 }
-            } else
-            {
-                filter = null;
-            }
+            } 
         }
 
         private void RBtnString_CheckedChanged(object sender, EventArgs e)
@@ -80,33 +80,51 @@ namespace terrorism_gis_analysis.UI
 
         private void RBtnNumerical_CheckedChanged(object sender, EventArgs e)
         {
+            Debug.WriteLine("This is a fucking test");
             UpdateCBoxVariables(AppController.NUMERICAL);
             PnlOptionFilterer.Controls.Clear();
-            PnlOptionFilterer.Controls.Add(min);
-            PnlOptionFilterer.Controls.Add(max);
-            min.Show();
-            max.Show();
+            PnlOptionFilterer.Controls.Add(numericMin);
+            PnlOptionFilterer.Controls.Add(numericMax);
+            numericMin.Show();
+            numericMax.Show();
             CurrSelection = AppController.NUMERICAL;
         }
 
         private void RBtnCategorical_CheckedChanged(object sender, EventArgs e)
         {
             UpdateCBoxVariables(AppController.CATEGORICAL);
-            CBoxCategorical.DataSource = Col2Categorical[GetVariableSelected()].ToList();
+            PnlOptionFilterer.Controls.Clear();
+            PnlOptionFilterer.Controls.Add(CBoxCategorical);
+            CBoxCategorical.Show();
             CurrSelection = AppController.CATEGORICAL;
         }
 
-        public void UpdateCBoxVariables(string typeName)
+        private void UpdateCBoxVariables(string typeName)
         {
             CBoxVariables.Items.Clear();
-            foreach (string col in Variables2Type.Keys)
+            CBoxVariables.Text = "";
+            foreach (var  col in Variables2Type.Keys)
                 if (Variables2Type[col].Equals(typeName))
                     CBoxVariables.Items.Add(col);
         }
 
         private string GetVariableSelected()
         {
-            return CBoxVariables.Items[CBoxVariables.SelectedIndex].ToString();
+            var idx = CBoxVariables.SelectedIndex;
+            if (idx != -1) return CBoxVariables.Items[idx].ToString();
+            return null;
+        }
+
+        private void CBoxVariables_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (CurrSelection != null && CurrSelection.Equals(AppController.CATEGORICAL))
+            {
+                var varSelected = GetVariableSelected();
+                if (varSelected != null)
+                {
+                    CBoxCategorical.DataSource = Col2Categorical[varSelected].ToList();
+                }
+            }
         }
     }
 }

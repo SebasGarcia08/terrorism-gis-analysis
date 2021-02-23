@@ -45,8 +45,8 @@ namespace terrorism_gis_analysis.UI
             this.GBoxColType.Controls.Add(this.RBtnString);
             this.GBoxColType.Controls.Add(this.RBtnNumerical);
             this.GBoxColType.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.GBoxColType.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.GBoxColType.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(158)))), ((int)(((byte)(161)))), ((int)(((byte)(178)))));
+            this.GBoxColType.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
+            this.GBoxColType.ForeColor = System.Drawing.Color.FromArgb(((int) (((byte) (158)))), ((int) (((byte) (161)))), ((int) (((byte) (178)))));
             this.GBoxColType.Location = new System.Drawing.Point(12, 12);
             this.GBoxColType.Name = "GBoxColType";
             this.GBoxColType.Size = new System.Drawing.Size(199, 64);
@@ -58,7 +58,7 @@ namespace terrorism_gis_analysis.UI
             // 
             this.RBtnCategorical.AutoSize = true;
             this.RBtnCategorical.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.RBtnCategorical.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.RBtnCategorical.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
             this.RBtnCategorical.ForeColor = System.Drawing.Color.White;
             this.RBtnCategorical.Location = new System.Drawing.Point(6, 14);
             this.RBtnCategorical.Name = "RBtnCategorical";
@@ -74,7 +74,7 @@ namespace terrorism_gis_analysis.UI
             this.RBtnString.AutoSize = true;
             this.RBtnString.Checked = true;
             this.RBtnString.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.RBtnString.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.RBtnString.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
             this.RBtnString.ForeColor = System.Drawing.Color.White;
             this.RBtnString.Location = new System.Drawing.Point(72, 37);
             this.RBtnString.Name = "RBtnString";
@@ -89,7 +89,7 @@ namespace terrorism_gis_analysis.UI
             // 
             this.RBtnNumerical.AutoSize = true;
             this.RBtnNumerical.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.RBtnNumerical.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.RBtnNumerical.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
             this.RBtnNumerical.ForeColor = System.Drawing.Color.White;
             this.RBtnNumerical.Location = new System.Drawing.Point(113, 14);
             this.RBtnNumerical.Name = "RBtnNumerical";
@@ -107,21 +107,24 @@ namespace terrorism_gis_analysis.UI
             this.CBoxVariables.Name = "CBoxVariables";
             this.CBoxVariables.Size = new System.Drawing.Size(199, 21);
             this.CBoxVariables.TabIndex = 8;
+            this.CBoxVariables.SelectedIndexChanged += new System.EventHandler(this.CBoxVariables_SelectedIndexChanged);
             // 
             // PnlOptionFilterer
             // 
+            this.PnlOptionFilterer.Anchor = ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
+            this.PnlOptionFilterer.AutoScroll = true;
             this.PnlOptionFilterer.Location = new System.Drawing.Point(12, 109);
             this.PnlOptionFilterer.Name = "PnlOptionFilterer";
-            this.PnlOptionFilterer.Size = new System.Drawing.Size(199, 46);
+            this.PnlOptionFilterer.Size = new System.Drawing.Size(199, 44);
             this.PnlOptionFilterer.TabIndex = 9;
             // 
             // BtnAddFilter
             // 
             this.BtnAddFilter.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.BtnAddFilter.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BtnAddFilter.Font = new System.Drawing.Font("Nirmala UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BtnAddFilter.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(126)))), ((int)(((byte)(249)))));
-            this.BtnAddFilter.Location = new System.Drawing.Point(64, 167);
+            this.BtnAddFilter.Font = new System.Drawing.Font("Nirmala UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
+            this.BtnAddFilter.ForeColor = System.Drawing.Color.FromArgb(((int) (((byte) (0)))), ((int) (((byte) (126)))), ((int) (((byte) (249)))));
+            this.BtnAddFilter.Location = new System.Drawing.Point(63, 159);
             this.BtnAddFilter.Name = "BtnAddFilter";
             this.BtnAddFilter.Size = new System.Drawing.Size(86, 30);
             this.BtnAddFilter.TabIndex = 10;
@@ -134,8 +137,8 @@ namespace terrorism_gis_analysis.UI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(51)))), ((int)(((byte)(73)))));
-            this.ClientSize = new System.Drawing.Size(223, 209);
+            this.BackColor = System.Drawing.Color.FromArgb(((int) (((byte) (46)))), ((int) (((byte) (51)))), ((int) (((byte) (73)))));
+            this.ClientSize = new System.Drawing.Size(223, 197);
             this.Controls.Add(this.BtnAddFilter);
             this.Controls.Add(this.PnlOptionFilterer);
             this.Controls.Add(this.CBoxVariables);
@@ -146,7 +149,6 @@ namespace terrorism_gis_analysis.UI
             this.GBoxColType.ResumeLayout(false);
             this.GBoxColType.PerformLayout();
             this.ResumeLayout(false);
-
         }
 
         #endregion

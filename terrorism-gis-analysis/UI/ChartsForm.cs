@@ -1,20 +1,127 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace terrorism_gis_analysis
 {
     public partial class ChartsForm : Form
     {
+        private DataTable db;
+
         public ChartsForm()
         {
             InitializeComponent();
+        }
+
+        private void ChartsForm_load(object sender, EventArgs e)
+        {
+            loadBarChart();
+            loadLineChart();
+            loadPieChart();
+        }
+
+        private void loadBarChart()
+        {
+            string[] x;
+            int[] y;
+
+            CountAttacks("attacktype1_txt", out x, out y);
+
+            //Series style
+            barChart.Series[0].LegendText = "Terrorist\nattacks";
+            barChart.Series[0].ChartType = SeriesChartType.Bar;
+            barChart.Series[0].IsValueShownAsLabel = true;
+            barChart.Series[0].Points.DataBindXY(x, y);
+
+            //Areas style
+            barChart.ChartAreas[0].Axes[0].MajorGrid.Enabled = false;
+            barChart.ChartAreas[0].Axes[1].MajorGrid.Enabled = false;
+
+            //Title
+            barChart.Titles.Add("Terrorist attacks per Type");
+        }
+
+        private void loadLineChart()
+        {
+            string[] x;
+            int[] y;
+
+            CountAttacks("iyear", out x, out y);
+
+            //Series style
+            lineChart.Series[0].LegendText = "Terrorist\nattacks";
+            lineChart.Series[0].IsValueShownAsLabel = true;
+            lineChart.Series[0].BorderWidth = 2;
+            lineChart.Series[0].ChartType = SeriesChartType.Line;
+            lineChart.Series[0].Points.DataBindXY(x, y);
+            lineChart.Legends[0].Enabled = true;
+
+            //Areas style
+            lineChart.ChartAreas[0].AxisX.Interval = 1;
+
+            //Title
+            lineChart.Titles.Add("Terrorist attacks through Years");
+        }
+
+        private void loadPieChart()
+        {
+            string[] x;
+            int[] y;
+
+            CountAttacks("region_txt", out x, out y);
+
+            //Series style
+            pieChart.Series[0].ChartType = SeriesChartType.Pie;
+            pieChart.Series[0].Points.DataBindXY(x, y);
+            pieChart.Legends[0].Enabled = true;
+            pieChart.ChartAreas[0].Area3DStyle.Enable3D = true;
+            pieChart.Series[0]["PieLabelStyle"] = "Disabled";
+
+            //Title
+            pieChart.Titles.Add("Terrorist attacks per World Region");
+        }
+
+        private void CountAttacks(string field, out string[] x, out int[] y)
+        {
+            Dictionary<string, int> attacksCount = new Dictionary<string, int>();
+            foreach (DataRow row in db.Rows)
+            {
+                if (attacksCount.ContainsKey((string)row[field]))
+                {
+                    attacksCount[(string)row[field]] += 1;
+                }
+                else
+                {
+                    attacksCount.Add((string)row[field], 1);
+                }
+            }
+
+            DataTable dt = new DataTable();
+            dt.Columns.Add(field, typeof(string));
+            dt.Columns.Add("Count", typeof(int));
+
+            foreach (KeyValuePair<string, int> kvp in attacksCount)
+            {
+                dt.Rows.Add(new Object[] { kvp.Key, kvp.Value });
+            }
+
+            //Get the Field values
+            x = (from p in dt.AsEnumerable()
+                 orderby p.Field<string>(field) ascending
+                 select p.Field<string>(field)).ToArray();
+
+            //Get the Count of attacks for each Field value
+            y = (from p in dt.AsEnumerable()
+                 orderby p.Field<string>(field) ascending
+                 select p.Field<int>("Count")).ToArray();
+        }
+
+        public void setDataBase(DataTable dt)
+        {
+            db = dt;
         }
     }
 }
