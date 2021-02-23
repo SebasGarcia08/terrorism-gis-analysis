@@ -97,6 +97,12 @@
     <Compile Include="UI\ChartsForm.Designer.cs">
       <DependentUpon>ChartsForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\FilterItem.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\FilterItem.Designer.cs">
+      <DependentUpon>FilterItem.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\FilterMakerForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -131,6 +137,9 @@
     </Compile>
     <EmbeddedResource Include="UI\ChartsForm.resx">
       <DependentUpon>ChartsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\FilterItem.resx">
+      <DependentUpon>FilterItem.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\FilterMakerForm.resx">
       <DependentUpon>FilterMakerForm.cs</DependentUpon>

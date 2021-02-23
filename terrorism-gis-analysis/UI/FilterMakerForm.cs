@@ -10,7 +10,6 @@ using System.Windows.Forms;
 using terrorism_gis_analysis.Controller;
 using terrorism_gis_analysis.Model;
 using System.Diagnostics;
-
 namespace terrorism_gis_analysis.UI
 {
     public partial class FilterMakerForm : Form
@@ -30,18 +29,25 @@ namespace terrorism_gis_analysis.UI
 
         string CurrSelection;
 
-        public FilterMakerForm(Dictionary<string, string> variables2Type, Dictionary<string, HashSet<string>> col2Categorical)
+        private MainForm MainView;
+
+        public FilterMakerForm(MainForm mainView, Dictionary<string, string> variables2Type, Dictionary<string, HashSet<string>> col2Categorical)
         {
             InitializeComponent();
             numericMin = new NumericUpDown() { Anchor = AnchorStyles.Top, Dock = DockStyle.Top, 
                 Minimum = Decimal.MinValue, Maximum =  Decimal.MaxValue};
+                
             numericMax = new NumericUpDown() { Anchor = AnchorStyles.Bottom, Dock = DockStyle.Bottom, 
                 Minimum = Decimal.MinValue, Maximum =  Decimal.MaxValue};
+            
             txtBox = new TextBox() { Anchor = AnchorStyles.Right, Dock = DockStyle.Top};
+            
             CBoxCategorical = new ComboBox() { Anchor = AnchorStyles.Right, Dock = DockStyle.Top };
             TopLevel = false;
+            Dock = DockStyle.Top;
             Variables2Type = variables2Type;
             Col2Categorical = col2Categorical;
+            MainView = mainView;
         }
 
         private void BtnAddFilter_Click(object sender, EventArgs e)
@@ -50,25 +56,36 @@ namespace terrorism_gis_analysis.UI
             {
                 string column = GetVariableSelected();
                 string param;
+                string filterInformation;
                 if (CurrSelection.Equals(AppController.CATEGORICAL))
                 {
-                    param = (string) CBoxCategorical.Items[CBoxCategorical.SelectedIndex];
-                    CategoricalFilter CatFilter = new CategoricalFilter(column, new string[] { param });
+                    var idx = CBoxCategorical.SelectedIndex;
+                    if (idx != -1)
+                    {
+                        param = (string) CBoxCategorical.Items[CBoxCategorical.SelectedIndex];
+                        CategoricalFilter filter = new CategoricalFilter(column, new string[] { param });
+                        filterInformation = column + "\n" + param;
+                        MainView.AppendControlToFiltersSidebar(new FilterItem(filterInformation));
+                    }
                 }
                 else if (CurrSelection.Equals(AppController.STRING))
                 {
                     param = txtBox.Text;
                     StringFilter filter = new StringFilter(column, param);
+                    filterInformation = column + "\n" + param;
+                    MainView.AppendControlToFiltersSidebar(new FilterItem(filterInformation));
                 } 
                 else
                 {
                     int min = (int) numericMin.Value;
                     int max = (int) numericMax.Value;
                     NumberFilter filter = new NumberFilter(column, min, max);
+                    filterInformation = column + "\n[" + min + "," + max + "]";
+                    MainView.AppendControlToFiltersSidebar(new FilterItem(filterInformation));
                 }
             } 
         }
-
+        
         private void RBtnString_CheckedChanged(object sender, EventArgs e)
         {
             UpdateCBoxVariables(AppController.STRING);

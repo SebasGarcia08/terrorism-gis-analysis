@@ -16,37 +16,38 @@ namespace terrorism_gis_analysis.Controller
         public const string NUMERICAL = "NUMERICAL";
         public const string CATEGORICAL = "CATEGORICAL";
         public const string STRING = "STRING";
-        private readonly ModelController MController;
-        private MainForm view;
+        
+        private readonly ModelController Model;
+        private MainForm View;
         
         public AppController(MainForm view)
         {
-            this.MController = new ModelController();
-            this.view = view;
+            this.Model = new ModelController();
+            this.View = view;
         }
 
         public string[] ReadAndGetColumns(string filePath)
         {
-            MController.ReadHeaders(filePath);
-            return MController.GetHeaders();
+            Model.ReadHeaders(filePath);
+            return Model.GetHeaders();
         }
 
         public DataTable ReadAndGetReport(BackgroundWorker bkgWorker, Dictionary<string, string> col2Type)
         {
-            MController.ReadTable(bkgWorker, col2Type);
-            return MController.GetDataTable();
+            Model.ReadTable(bkgWorker, col2Type);
+            return Model.GetDataTable();
         }
 
         public DataTable GetDataTable()
         {
-            return MController.GetDataTable();
+            return Model.GetDataTable();
         }
         
         public FilterMakerForm CreateFiltererMaker()
         {
-            Dictionary<string, string> vars2Types = MController.GetColumnTypes();
-            Dictionary<string, HashSet<string>> col2Categorical = MController.GetCol2Categorical();
-            return new FilterMakerForm(vars2Types, col2Categorical);
+            Dictionary<string, string> vars2Types = Model.GetColumnTypes();
+            Dictionary<string, HashSet<string>> col2Categorical = Model.GetCol2Categorical();
+            return new FilterMakerForm(View, vars2Types, col2Categorical);
         }
     }
 }

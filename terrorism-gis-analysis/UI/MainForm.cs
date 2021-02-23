@@ -39,6 +39,7 @@ namespace terrorism_gis_analysis
             InitializeComponent();
 
             this.Controller = new AppController(this);
+            
             this.MapForm = new MapForm() { Dock = DockStyle.Fill, TopLevel = false, TopMost = true };
             this.ChartsForm = new ChartsForm() { Dock = DockStyle.Fill, TopLevel = false, TopMost = true };
             this.TableForm = new TableForm() { Dock = DockStyle.Fill, TopLevel = false, TopMost = true };
@@ -46,6 +47,7 @@ namespace terrorism_gis_analysis
             HeaderTypes = new List<HeaderTypeSelector>();
             Col2Type = new Dictionary<string, string>();
             ColsInToolTip = new List<string>();
+            
             ConfigureInitialState();
         }
 
@@ -71,8 +73,8 @@ namespace terrorism_gis_analysis
 
         private void LoadFilterMaker()
         {
-            this.Filterer = Controller.CreateFiltererMaker();
-            this.PnlDropdownFilters.Controls.Add(Filterer);
+            Filterer = Controller.CreateFiltererMaker();
+            PnlDropdownFilters.Controls.Add(Filterer);
             Filterer.BringToFront();
             Filterer.Show();
         }
@@ -101,6 +103,13 @@ namespace terrorism_gis_analysis
             form.Show();
         }
 
+        public void AppendControlToFiltersSidebar(Control control)
+        {
+            PnlDropdownFilters.Controls.Add(control);
+            control.BringToFront();
+            control.Show();
+        }
+
         private void ShowHeaders(string[] columns)
         {
             foreach(string col in columns)
@@ -108,7 +117,6 @@ namespace terrorism_gis_analysis
                 HeaderTypeSelector objForm = new HeaderTypeSelector(col) {  TopLevel = false};
                 PnlHeaderType.Controls.Add(objForm);
                 objForm.BringToFront();
-                Console.WriteLine(col);
                 objForm.Show();
                 HeaderTypes.Add(objForm);
             }
@@ -147,10 +155,7 @@ namespace terrorism_gis_analysis
 
         private void BkgWorkerDataReader_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            // Change the value of the ProgressBar to the BackgroundWorker progress.
             progressBar.Value = e.ProgressPercentage;
-
-            // Change the value of the ProgressBar to the BackgroundWorker progress.
             LblPercentage.Text = e.ProgressPercentage + "%";
         }
 
@@ -164,7 +169,6 @@ namespace terrorism_gis_analysis
             MapForm.SetColsInToolTips(ColsInToolTip);
             TableForm.SetDataSource(dt);
             ChartsForm.setDataBase(dt);
-            BtnReadTable.Enabled = false;
         }
 
         private void BtnReadTable_Click(object sender, EventArgs e)
@@ -178,6 +182,7 @@ namespace terrorism_gis_analysis
             }
             progressBar.Visible = true;
             LblPercentage.Visible = true;
+            BtnReadTable.Enabled = false;
             BkgWorkerDataReader.RunWorkerAsync();
         }
 

@@ -111,8 +111,8 @@ namespace terrorism_gis_analysis.UI
             // 
             // PnlOptionFilterer
             // 
-            this.PnlOptionFilterer.Anchor = ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
             this.PnlOptionFilterer.AutoScroll = true;
+            this.PnlOptionFilterer.AutoSize = true;
             this.PnlOptionFilterer.Location = new System.Drawing.Point(12, 109);
             this.PnlOptionFilterer.Name = "PnlOptionFilterer";
             this.PnlOptionFilterer.Size = new System.Drawing.Size(199, 44);
@@ -137,7 +137,7 @@ namespace terrorism_gis_analysis.UI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int) (((byte) (46)))), ((int) (((byte) (51)))), ((int) (((byte) (73)))));
+            this.BackColor = System.Drawing.Color.FromArgb(((int) (((byte) (24)))), ((int) (((byte) (30)))), ((int) (((byte) (54)))));
             this.ClientSize = new System.Drawing.Size(223, 197);
             this.Controls.Add(this.BtnAddFilter);
             this.Controls.Add(this.PnlOptionFilterer);
@@ -149,6 +149,7 @@ namespace terrorism_gis_analysis.UI
             this.GBoxColType.ResumeLayout(false);
             this.GBoxColType.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
         }
 
         #endregion
