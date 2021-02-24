@@ -14,10 +14,50 @@ using terrorism_gis_analysis.UI;
 
 namespace terrorism_gis_analysis
 {
-
     public partial class MainForm : Form
     {
+        // Make title bar of same color as form 
+        [DllImport("User32.dll", CharSet = CharSet.Auto)]
+        public static extern int ReleaseDC(IntPtr hWnd, IntPtr hDC);
 
+        [DllImport("User32.dll")]
+        private static extern IntPtr GetWindowDC(IntPtr hWnd);
+
+        protected override void WndProc(ref Message m)
+        {
+            base.WndProc(ref m);
+            const int WM_NCPAINT = 0x85;
+            if (m.Msg == WM_NCPAINT)
+            {
+                IntPtr hdc = GetWindowDC(m.HWnd);
+                if ((int)hdc != 0)
+                {
+                    Graphics g = Graphics.FromHdc(hdc);
+                    g.FillRectangle(Brushes.Green, new Rectangle(0, 0, 4800, 23));
+                    g.Flush();
+                    ReleaseDC(m.HWnd, hdc);
+                }
+            }
+        }
+        
+        // Make form Draggable 
+        public const int WM_NCLBUTTONDOWN = 0xA1;
+        public const int HT_CAPTION = 0x2;
+
+        [DllImport("user32.dll")]
+        public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
+        [DllImport("user32.dll")]
+        public static extern bool ReleaseCapture();
+
+        private void MainForm_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
+        {     
+            if (e.Button == MouseButtons.Left)
+            {
+                ReleaseCapture();
+                SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
+            }
+        }
+        
         public const string TABLE = "Table";
         public const string MAP = "Map";
         public const string CHARTS = "Charts";
