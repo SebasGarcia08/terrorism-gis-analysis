@@ -16,7 +16,10 @@ namespace terrorism_gis_analysis
 {
     public partial class MainForm : Form
     {
-        // Make title bar of same color as form 
+        #region make title bar same color as form
+        /// <summary>
+        /// Make title bar of same color as form 
+        /// </summary>
         [DllImport("User32.dll", CharSet = CharSet.Auto)]
         public static extern int ReleaseDC(IntPtr hWnd, IntPtr hDC);
 
@@ -39,8 +42,12 @@ namespace terrorism_gis_analysis
                 }
             }
         }
+        #endregion
         
-        // Make form Draggable 
+        #region Make form draggable
+        /// <summary>
+        /// Make form draggable
+        /// </summary>
         public const int WM_NCLBUTTONDOWN = 0xA1;
         public const int HT_CAPTION = 0x2;
 
@@ -49,7 +56,7 @@ namespace terrorism_gis_analysis
         [DllImport("user32.dll")]
         public static extern bool ReleaseCapture();
 
-        private void MainForm_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
+        private void MainForm_MouseDown(object sender, MouseEventArgs e)
         {     
             if (e.Button == MouseButtons.Left)
             {
@@ -57,6 +64,24 @@ namespace terrorism_gis_analysis
                 SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
             }
         }
+        #endregion
+        
+        #region Rounded corners
+        /// <summary>
+        /// Round corners
+        /// </summary>
+        [DllImport("Gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
+
+        private static extern IntPtr CreateRoundRectRgn
+        (
+            int nLeftRect,
+            int nTopRect,
+            int nRightRect,
+            int nBottomRect,
+            int nWidthEllipse,
+            int nHeightEllipse
+        );
+        #endregion
         
         public const string TABLE = "Table";
         public const string MAP = "Map";
@@ -73,11 +98,17 @@ namespace terrorism_gis_analysis
         private List<HeaderTypeSelector> HeaderTypes;
         private Dictionary<string, string> Col2Type;
         private List<string> ColsInToolTip;
-
+        
         public MainForm()
         {
             InitializeComponent();
-
+            
+            // Borderless
+            FormBorderStyle = FormBorderStyle.None;
+            
+            // Rounded borders
+            Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, Width, Height, 30, 30));
+            
             this.Controller = new AppController(this);
             
             this.MapForm = new MapForm() { Dock = DockStyle.Fill, TopLevel = false, TopMost = true };
