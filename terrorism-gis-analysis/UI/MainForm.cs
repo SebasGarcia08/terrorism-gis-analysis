@@ -16,73 +16,6 @@ namespace terrorism_gis_analysis
 {
     public partial class MainForm : Form
     {
-        #region make title bar same color as form
-        /// <summary>
-        /// Make title bar of same color as form 
-        /// </summary>
-        [DllImport("User32.dll", CharSet = CharSet.Auto)]
-        public static extern int ReleaseDC(IntPtr hWnd, IntPtr hDC);
-
-        [DllImport("User32.dll")]
-        private static extern IntPtr GetWindowDC(IntPtr hWnd);
-
-        protected override void WndProc(ref Message m)
-        {
-            base.WndProc(ref m);
-            const int WM_NCPAINT = 0x85;
-            if (m.Msg == WM_NCPAINT)
-            {
-                IntPtr hdc = GetWindowDC(m.HWnd);
-                if ((int)hdc != 0)
-                {
-                    Graphics g = Graphics.FromHdc(hdc);
-                    g.FillRectangle(Brushes.Green, new Rectangle(0, 0, 4800, 23));
-                    g.Flush();
-                    ReleaseDC(m.HWnd, hdc);
-                }
-            }
-        }
-        #endregion
-        
-        #region Make form draggable
-        /// <summary>
-        /// Make form draggable
-        /// </summary>
-        public const int WM_NCLBUTTONDOWN = 0xA1;
-        public const int HT_CAPTION = 0x2;
-
-        [DllImport("user32.dll")]
-        public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
-        [DllImport("user32.dll")]
-        public static extern bool ReleaseCapture();
-
-        private void MainForm_MouseDown(object sender, MouseEventArgs e)
-        {     
-            if (e.Button == MouseButtons.Left)
-            {
-                ReleaseCapture();
-                SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
-            }
-        }
-        #endregion
-        
-        #region Rounded corners
-        /// <summary>
-        /// Round corners
-        /// </summary>
-        [DllImport("Gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
-
-        private static extern IntPtr CreateRoundRectRgn
-        (
-            int nLeftRect,
-            int nTopRect,
-            int nRightRect,
-            int nBottomRect,
-            int nWidthEllipse,
-            int nHeightEllipse
-        );
-        #endregion
-        
         public const string TABLE = "Table";
         public const string MAP = "Map";
         public const string CHARTS = "Charts";
@@ -102,12 +35,6 @@ namespace terrorism_gis_analysis
         public MainForm()
         {
             InitializeComponent();
-            
-            // Borderless
-            FormBorderStyle = FormBorderStyle.None;
-            
-            // Rounded borders
-            Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, Width, Height, 30, 30));
             
             this.Controller = new AppController(this);
             

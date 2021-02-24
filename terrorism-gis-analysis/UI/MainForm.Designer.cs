@@ -192,7 +192,6 @@ namespace terrorism_gis_analysis
             this.PnlSidebar.Name = "PnlSidebar";
             this.PnlSidebar.Size = new System.Drawing.Size(223, 100);
             this.PnlSidebar.TabIndex = 2;
-            this.PnlSidebar.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MainForm_MouseDown);
             // 
             // MiniLogo
             // 
