@@ -52,12 +52,11 @@ namespace terrorism_gis_analysis.Controller
             View.ResetMap(QueryRows);
 
             DataTable dt = ModelController.GetDataTable();
-            string dc = dt.Columns.ToString();
-            
+
             DataTable dt2 = EnumerableRowCollectionExtensions.Where(dt.AsEnumerable(), row => QueryRows.Contains(row))
                 .CopyToDataTable();
 
-            View.updateTable(dt2);
+            View.UpdateTable(dt2);
             
             
         }
