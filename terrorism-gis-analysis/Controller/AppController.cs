@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Data;
 using System.ComponentModel;
+using System.Linq;
 using terrorism_gis_analysis.Model;
 using terrorism_gis_analysis.UI;
 
@@ -44,13 +45,28 @@ namespace terrorism_gis_analysis.Controller
             Dictionary<string, HashSet<string>> col2Categorical = ModelController.GetCol2Categorical();
             return new FilterMakerForm(View, this, vars2Types, col2Categorical);
         }
+
+        private void UpdateViews()
+        {
+            DataRow[] QueryRows = ModelController.GetDataTableRows();
+            View.ResetMap(QueryRows);
+
+            DataTable dt = ModelController.GetDataTable();
+            string dc = dt.Columns.ToString();
+            
+            DataTable dt2 = EnumerableRowCollectionExtensions.Where(dt.AsEnumerable(), row => QueryRows.Contains(row))
+                .CopyToDataTable();
+
+            View.updateTable(dt2);
+            
+            
+        }
         
         public bool addStringFilter(string columnName, string param)
         {
             ModelController.AddStringFilter(columnName, param);
             
-            DataRow[] QueryRows = ModelController.GetDataTableRows();
-            View.ResetMap(QueryRows);
+           UpdateViews();
             
             return true; 
         }
@@ -59,8 +75,7 @@ namespace terrorism_gis_analysis.Controller
         {
             ModelController.AddNumberFilter(columnName, param1, param2);
             
-            DataRow[] QueryRows = ModelController.GetDataTableRows();
-            View.ResetMap(QueryRows);
+            UpdateViews();
             
             return true; 
         }
@@ -69,8 +84,7 @@ namespace terrorism_gis_analysis.Controller
         {
             ModelController.AddCategoricalFilter(columnName, parameters);
             
-            DataRow[] QueryRows = ModelController.GetDataTableRows();
-            View.ResetMap(QueryRows);
+            UpdateViews();
             
             return true; 
         }

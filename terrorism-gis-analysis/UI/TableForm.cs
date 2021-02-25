@@ -26,5 +26,10 @@ namespace terrorism_gis_analysis
         {
             this.dataGridView.DataSource = dt;
         }
+
+        private void dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

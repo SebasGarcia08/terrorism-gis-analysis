@@ -55,6 +55,11 @@ namespace terrorism_gis_analysis
             ConfigureInitialState();
         }
 
+        public void updateTable(DataTable dt)
+        {
+            TableForm.SetDataSource(dt);
+            ChartsForm.setDataBase(dt);
+        }
         public void ResetMap(DataRow[] rows)
         {
             MapForm.ResetMap(rows);
