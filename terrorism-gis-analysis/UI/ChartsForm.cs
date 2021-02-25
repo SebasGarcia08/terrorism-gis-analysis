@@ -122,6 +122,14 @@ namespace terrorism_gis_analysis
         public void setDataBase(DataTable dt)
         {
             db = dt;
+            // barChart.DataSource = dt;
+            // lineChart.DataSource = dt;
+            // pieChart.DataSource = dt;
+            
+            loadBarChart();
+            loadLineChart();
+            loadPieChart();
+            
         }
     }
 }

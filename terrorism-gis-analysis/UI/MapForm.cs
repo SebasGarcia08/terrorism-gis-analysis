@@ -18,7 +18,8 @@ namespace terrorism_gis_analysis
 
         private DataTable db;
         private List<string> ColsInToolTips;
-
+        private bool Updated;
+        
         public MapForm()
         {
             InitializeComponent();
@@ -34,8 +35,9 @@ namespace terrorism_gis_analysis
             gmap.Position = new PointLatLng(3.42158, -76.5205); //Start position
 
             gmap.Overlays.Add(markers);
-
-            load_attacks();
+            
+            if(!Updated)
+                load_attacks();
         }
 
         private void setMarkers()
@@ -84,8 +86,10 @@ namespace terrorism_gis_analysis
         
         public void ResetMap(DataRow[] rows)
         {
+            Updated = true;
+            
             markers.Clear();
-
+            
             foreach (DataRow row in rows)
             {
                 double lat = (double) row["latitude"];
