@@ -10,10 +10,12 @@ namespace terrorism_gis_analysis
     public partial class ChartsForm : Form
     {
         private DataTable db;
+        private bool Loaded;
 
         public ChartsForm()
         {
             InitializeComponent();
+            Loaded = false;
         }
 
         private void ChartsForm_load(object sender, EventArgs e)
@@ -41,7 +43,13 @@ namespace terrorism_gis_analysis
             barChart.ChartAreas[0].Axes[1].MajorGrid.Enabled = false;
 
             //Title
-            barChart.Titles.Add("Terrorist attacks per Type");
+            if (!Loaded)
+            {
+                barChart.Titles.Add("Terrorist attacks per Type");
+                Loaded = true;
+            }
+
+               
         }
 
         private void loadLineChart()
@@ -63,7 +71,12 @@ namespace terrorism_gis_analysis
             lineChart.ChartAreas[0].AxisX.Interval = 1;
 
             //Title
-            lineChart.Titles.Add("Terrorist attacks through Years");
+            if (!Loaded)
+            {
+                lineChart.Titles.Add("Terrorist attacks through Years");
+                Loaded = true;
+            }
+                
         }
 
         private void loadPieChart()
@@ -81,7 +94,12 @@ namespace terrorism_gis_analysis
             pieChart.Series[0]["PieLabelStyle"] = "Disabled";
 
             //Title
-            pieChart.Titles.Add("Terrorist attacks per World Region");
+            if (!Loaded)
+            {
+                pieChart.Titles.Add("Terrorist attacks per World Region");
+                Loaded = true;
+            }
+                
         }
 
         private void CountAttacks(string field, out string[] x, out int[] y)
