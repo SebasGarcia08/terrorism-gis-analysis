@@ -51,6 +51,20 @@ namespace terrorism_gis_analysis
                 markers.Markers.Add(marker);
             }
         }
+        
+        private void setMarkers(DataRow[] Rows)
+        {
+            for (int i = 0; i < points.Count; i++)
+            {
+                PointLatLng p = points[i];
+                GMapMarker marker = new GMarkerGoogle(p, GMarkerGoogleType.red_dot);
+                foreach(string col in ColsInToolTips)
+                {
+                    marker.ToolTipText += col + ":" + Rows[i][col].ToString() + "\n";
+                }
+                markers.Markers.Add(marker);
+            }
+        }
 
         private void load_attacks()
         {
@@ -66,6 +80,25 @@ namespace terrorism_gis_analysis
 
             setMarkers();
             points.Clear();
+        }
+        
+        public void ResetMap(DataRow[] rows)
+        {
+            markers.Clear();
+
+            foreach (DataRow row in rows)
+            {
+                double lat = (double) row["latitude"];
+                double lng = (double) row["longitude"];
+
+                PointLatLng p = new PointLatLng(lat, lng);
+
+                points.Add(p);
+            }
+            
+            setMarkers(rows);
+            points.Clear();
+            
         }
 
         public void SetDabatase(DataTable dt)

@@ -15,8 +15,9 @@ namespace terrorism_gis_analysis.Model
         {
             this.parameters = parameters;
         }
-
-        public new string GetFilterExpression()
+        
+         
+        public override string GetFilterExpression()
         {
 
             string exp = "(";
@@ -27,11 +28,11 @@ namespace terrorism_gis_analysis.Model
 
                 if (i < parameters.Length - 1)
                 {
-                    exp += base.columnName + "=" + e + " AND ";
+                    exp += base.columnName + "= \'" + e + "\' AND ";
                 }
                 else
                 {
-                    exp += base.columnName + "=" + e + ")";
+                    exp += base.columnName + "= \'" + e + "\')";
                 }
 
             }

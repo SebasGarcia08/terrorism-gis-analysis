@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace terrorism_gis_analysis.Model
 {
-    public class StringFilter : Filter
+    public class StringFilter : Filter, IFilterGenerator
     {
         private string param;
         
@@ -15,9 +15,9 @@ namespace terrorism_gis_analysis.Model
             this.param = param;
         }
 
-        public new string GetFilterExpression()
+        public override string GetFilterExpression()
         {
-            return "(" + base.columnName + " LIKE \'%" + param + "\')";
+            return "(" + base.columnName + " LIKE \'%" + param + "%\')";
         }
 
     }

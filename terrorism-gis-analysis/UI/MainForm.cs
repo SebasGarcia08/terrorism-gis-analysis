@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.IO;
 using terrorism_gis_analysis.Controller;
 using System.Runtime.InteropServices;
+using terrorism_gis_analysis.Model;
 using terrorism_gis_analysis.UI;
 
 namespace terrorism_gis_analysis
@@ -34,11 +35,14 @@ namespace terrorism_gis_analysis
         private Dictionary<string, string> Col2Type;
         private List<string> ColsInToolTip;
 
+        private ModelController ModelController;
         public MainForm()
         {
             InitializeComponent();
 
             this.Controller = new AppController(this);
+
+            this.ModelController = new ModelController();
             
             this.MapForm = new MapForm() { Dock = DockStyle.Fill, TopLevel = false, TopMost = true };
             this.ChartsForm = new ChartsForm() { Dock = DockStyle.Fill, TopLevel = false, TopMost = true };
@@ -51,6 +55,11 @@ namespace terrorism_gis_analysis
             ConfigureInitialState();
         }
 
+        public void ResetMap(DataRow[] rows)
+        {
+            MapForm.ResetMap(rows);
+        }
+        
         #region GUIMethods
         private void ConfigureInitialState()
         {

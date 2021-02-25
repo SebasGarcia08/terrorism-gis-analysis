@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace terrorism_gis_analysis.Model
 {
-    public class NumberFilter : Filter
+    public class NumberFilter : Filter, IFilterGenerator
     {
         private int param1;
         private int param2;
@@ -17,7 +17,7 @@ namespace terrorism_gis_analysis.Model
             this.param2 = param2;
         }
 
-        public new string GetFilterExpression()
+        public override string GetFilterExpression()
         {
             return "(" + base.columnName + " >= " + param1 + " AND " + base.columnName + " <= " + param2 + ")"; 
         }
