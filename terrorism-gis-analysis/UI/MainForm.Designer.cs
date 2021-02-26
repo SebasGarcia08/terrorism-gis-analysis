@@ -38,7 +38,7 @@ namespace terrorism_gis_analysis
             this.BtnCharts = new System.Windows.Forms.Button();
             this.BtnMap = new System.Windows.Forms.Button();
             this.BtnSections = new System.Windows.Forms.Button();
-            this.panel2 = new System.Windows.Forms.Panel();
+            this.PnlSidebar = new System.Windows.Forms.Panel();
             this.MiniLogo = new System.Windows.Forms.Label();
             this.PnlFormLoader = new System.Windows.Forms.Panel();
             this.loadDataBtn = new System.Windows.Forms.Button();
@@ -53,7 +53,7 @@ namespace terrorism_gis_analysis
             this.BkgWorkerDataReader = new System.ComponentModel.BackgroundWorker();
             this.panel1.SuspendLayout();
             this.PnlDropDownSections.SuspendLayout();
-            this.panel2.SuspendLayout();
+            this.PnlSidebar.SuspendLayout();
             this.PanelFormLoader.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -65,7 +65,7 @@ namespace terrorism_gis_analysis
             this.panel1.Controls.Add(this.BtnFlters);
             this.panel1.Controls.Add(this.PnlDropDownSections);
             this.panel1.Controls.Add(this.BtnSections);
-            this.panel1.Controls.Add(this.panel2);
+            this.panel1.Controls.Add(this.PnlSidebar);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
@@ -183,15 +183,15 @@ namespace terrorism_gis_analysis
             this.BtnSections.UseVisualStyleBackColor = true;
             this.BtnSections.Click += new System.EventHandler(this.BtnSections_Click);
             // 
-            // panel2
+            // PnlSidebar
             // 
-            this.panel2.Controls.Add(this.MiniLogo);
-            this.panel2.Controls.Add(this.PnlFormLoader);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel2.Location = new System.Drawing.Point(0, 0);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(223, 100);
-            this.panel2.TabIndex = 2;
+            this.PnlSidebar.Controls.Add(this.MiniLogo);
+            this.PnlSidebar.Controls.Add(this.PnlFormLoader);
+            this.PnlSidebar.Dock = System.Windows.Forms.DockStyle.Top;
+            this.PnlSidebar.Location = new System.Drawing.Point(0, 0);
+            this.PnlSidebar.Name = "PnlSidebar";
+            this.PnlSidebar.Size = new System.Drawing.Size(223, 100);
+            this.PnlSidebar.TabIndex = 2;
             // 
             // MiniLogo
             // 
@@ -228,7 +228,7 @@ namespace terrorism_gis_analysis
             // 
             // openFileDialog
             // 
-            this.openFileDialog.Filter = "CSV files (*.csv)|*.csv|TSV files (*.tsv*)|*.tsv*";
+            this.openFileDialog.Filter = "TSV files (*.tsv*)|*.tsv*|CSV files (*.csv)|*.csv";
             // 
             // PanelFormLoader
             // 
@@ -346,8 +346,8 @@ namespace terrorism_gis_analysis
             this.Text = "PrincipalForm";
             this.panel1.ResumeLayout(false);
             this.PnlDropDownSections.ResumeLayout(false);
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
+            this.PnlSidebar.ResumeLayout(false);
+            this.PnlSidebar.PerformLayout();
             this.PanelFormLoader.ResumeLayout(false);
             this.PanelFormLoader.PerformLayout();
             this.ResumeLayout(false);
@@ -355,7 +355,7 @@ namespace terrorism_gis_analysis
 
         #endregion
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Panel PnlSidebar;
         private System.Windows.Forms.Panel PnlFormLoader;
         private System.Windows.Forms.Button loadDataBtn;
         protected System.Windows.Forms.OpenFileDialog openFileDialog;
