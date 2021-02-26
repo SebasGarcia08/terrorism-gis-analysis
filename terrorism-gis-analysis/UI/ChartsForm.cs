@@ -10,12 +10,16 @@ namespace terrorism_gis_analysis
     public partial class ChartsForm : Form
     {
         private DataTable db;
-        private bool Loaded;
-
+        private bool LoadedBar;
+        private bool LoadedPie;
+        private bool LoadedLine;
+        
         public ChartsForm()
         {
             InitializeComponent();
-            Loaded = false;
+            LoadedBar = false;
+            LoadedPie = false;
+            LoadedLine = false;
         }
 
         private void ChartsForm_load(object sender, EventArgs e)
@@ -43,13 +47,11 @@ namespace terrorism_gis_analysis
             barChart.ChartAreas[0].Axes[1].MajorGrid.Enabled = false;
 
             //Title
-            if (!Loaded)
+            if (!LoadedBar)
             {
                 barChart.Titles.Add("Terrorist attacks per Type");
-                Loaded = true;
+                LoadedBar = true;
             }
-
-               
         }
 
         private void loadLineChart()
@@ -71,10 +73,10 @@ namespace terrorism_gis_analysis
             lineChart.ChartAreas[0].AxisX.Interval = 1;
 
             //Title
-            if (!Loaded)
+            if (!LoadedLine)
             {
                 lineChart.Titles.Add("Terrorist attacks through Years");
-                Loaded = true;
+                LoadedLine = true;
             }
                 
         }
@@ -94,10 +96,10 @@ namespace terrorism_gis_analysis
             pieChart.Series[0]["PieLabelStyle"] = "Disabled";
 
             //Title
-            if (!Loaded)
+            if (!LoadedPie)
             {
                 pieChart.Titles.Add("Terrorist attacks per World Region");
-                Loaded = true;
+                LoadedPie = true;
             }
                 
         }
@@ -106,15 +108,12 @@ namespace terrorism_gis_analysis
         {
             Dictionary<string, int> attacksCount = new Dictionary<string, int>();
             foreach (DataRow row in db.Rows)
-            {
-                if (attacksCount.ContainsKey((string)row[field]))
-                {
-                    attacksCount[(string)row[field]] += 1;
-                }
+            {   
+                var value = row[field].ToString();
+                if (attacksCount.ContainsKey(value))
+                    attacksCount[value] += 1;
                 else
-                {
-                    attacksCount.Add((string)row[field], 1);
-                }
+                    attacksCount.Add(value, 1);
             }
 
             DataTable dt = new DataTable();
