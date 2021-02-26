@@ -228,7 +228,7 @@ namespace terrorism_gis_analysis
             // 
             // openFileDialog
             // 
-            this.openFileDialog.Filter = "CSV files (*.csv)|*.csv|TSV files (*.tsv*)|*.tsv*";
+            this.openFileDialog.Filter = "TSV files (*.tsv*)|*.tsv*|CSV files (*.csv)|*.csv";
             // 
             // PanelFormLoader
             // 
