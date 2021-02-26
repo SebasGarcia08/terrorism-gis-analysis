@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using terrorism_gis_analysis.Controller;
 using terrorism_gis_analysis.Model;
 using System.Diagnostics;
+
 namespace terrorism_gis_analysis.UI
 {
     public partial class FilterMakerForm : Form

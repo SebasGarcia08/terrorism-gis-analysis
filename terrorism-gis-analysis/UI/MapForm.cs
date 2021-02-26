@@ -6,7 +6,6 @@ using GMap.NET;
 using GMap.NET.WindowsForms;
 using GMap.NET.WindowsForms.Markers;
 using GMap.NET.MapProviders;
-using System.Globalization;
 
 namespace terrorism_gis_analysis.UI
 {
