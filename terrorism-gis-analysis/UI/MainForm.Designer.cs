@@ -343,7 +343,7 @@ namespace terrorism_gis_analysis.UI
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "PrincipalForm";
+            this.Text = "Geo Analyser";
             this.panel1.ResumeLayout(false);
             this.PnlDropDownSections.ResumeLayout(false);
             this.PnlSidebar.ResumeLayout(false);
