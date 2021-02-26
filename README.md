@@ -9,6 +9,7 @@ The current project is intended to visualize a dataset of geolocation data in a 
 ## Documentation
 
 [English](https://docs.google.com/document/d/1CijrqKsIsJqWok7NQQmqc5la85YPflYSwbEwSrXZlh4/edit?usp=sharing)
+
 [Spanish](https://docs.google.com/document/d/1I1HwoAdVSDDUDWaDNESiI2X2GqfMJ9tUmQaw-ev22_M/edit?usp=sharing)
 
 ## Presentation
@@ -17,6 +18,8 @@ The current project is intended to visualize a dataset of geolocation data in a 
 
 ## Authors
 [Sebastián García Acosta](https://github.com/SebasGarcia08)
+
 [Christian Gallo Peláez](https://github.com/Gallo9923)
+
 [Juan Fernando Angulo Salvador](https://github.com/Juanferas)
 
