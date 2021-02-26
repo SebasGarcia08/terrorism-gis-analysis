@@ -85,14 +85,6 @@ namespace terrorism_gis_analysis
             BtnTable.Enabled = true;
         }
 
-        private void LoadFilterMaker()
-        {
-            Filterer = Controller.CreateFiltererMaker();
-            PnlDropdownFilters.Controls.Add(Filterer);
-            Filterer.BringToFront();
-            Filterer.Show();
-        }
-
         public void DeleteFilterCards()
         {
             //TODO
@@ -122,11 +114,21 @@ namespace terrorism_gis_analysis
             form.Show();
         }
 
-        public void AppendControlToFiltersSidebar(Control control)
+        private void LoadFilterMaker()
         {
-            PnlDropdownFilters.Controls.Add(control);
-            control.BringToFront();
-            control.Show();
+            Filterer = Controller.CreateFiltererMaker();
+            PnlDropdownFilters.Controls.Add(Filterer);
+            Filterer.BringToFront();
+            Filterer.Show();
+        }
+        
+        public void AddToFiltersSidebarIfNotContained(Control control)
+        {
+            if (!PnlDropdownFilters.Controls.Contains(control))
+            {
+                PnlDropdownFilters.Controls.Add(control);
+                control.Show();                
+            }
         }
 
         private void ShowHeaders(string[] columns)

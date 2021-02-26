@@ -41,8 +41,8 @@ namespace terrorism_gis_analysis.UI
             // HeaderName
             // 
             this.HeaderName.AutoSize = true;
-            this.HeaderName.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.HeaderName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(158)))), ((int)(((byte)(161)))), ((int)(((byte)(178)))));
+            this.HeaderName.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
+            this.HeaderName.ForeColor = System.Drawing.Color.FromArgb(((int) (((byte) (158)))), ((int) (((byte) (161)))), ((int) (((byte) (178)))));
             this.HeaderName.Location = new System.Drawing.Point(26, 14);
             this.HeaderName.Name = "HeaderName";
             this.HeaderName.Size = new System.Drawing.Size(51, 20);
@@ -52,8 +52,10 @@ namespace terrorism_gis_analysis.UI
             // ChBoxToolTip
             // 
             this.ChBoxToolTip.AutoSize = true;
+            this.ChBoxToolTip.Checked = true;
+            this.ChBoxToolTip.CheckState = System.Windows.Forms.CheckState.Checked;
             this.ChBoxToolTip.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.ChBoxToolTip.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ChBoxToolTip.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
             this.ChBoxToolTip.ForeColor = System.Drawing.Color.White;
             this.ChBoxToolTip.Location = new System.Drawing.Point(576, 11);
             this.ChBoxToolTip.Name = "ChBoxToolTip";
@@ -66,7 +68,7 @@ namespace terrorism_gis_analysis.UI
             // 
             this.RBtnCategorical.AutoSize = true;
             this.RBtnCategorical.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.RBtnCategorical.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.RBtnCategorical.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
             this.RBtnCategorical.ForeColor = System.Drawing.Color.White;
             this.RBtnCategorical.Location = new System.Drawing.Point(6, 14);
             this.RBtnCategorical.Name = "RBtnCategorical";
@@ -80,7 +82,7 @@ namespace terrorism_gis_analysis.UI
             // 
             this.RBtnNumerical.AutoSize = true;
             this.RBtnNumerical.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.RBtnNumerical.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.RBtnNumerical.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
             this.RBtnNumerical.ForeColor = System.Drawing.Color.White;
             this.RBtnNumerical.Location = new System.Drawing.Point(110, 15);
             this.RBtnNumerical.Name = "RBtnNumerical";
@@ -95,7 +97,7 @@ namespace terrorism_gis_analysis.UI
             this.RBtnString.AutoSize = true;
             this.RBtnString.Checked = true;
             this.RBtnString.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.RBtnString.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.RBtnString.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
             this.RBtnString.ForeColor = System.Drawing.Color.White;
             this.RBtnString.Location = new System.Drawing.Point(215, 14);
             this.RBtnString.Name = "RBtnString";
@@ -111,8 +113,8 @@ namespace terrorism_gis_analysis.UI
             this.GBoxColType.Controls.Add(this.RBtnString);
             this.GBoxColType.Controls.Add(this.RBtnNumerical);
             this.GBoxColType.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.GBoxColType.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.GBoxColType.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(158)))), ((int)(((byte)(161)))), ((int)(((byte)(178)))));
+            this.GBoxColType.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
+            this.GBoxColType.ForeColor = System.Drawing.Color.FromArgb(((int) (((byte) (158)))), ((int) (((byte) (161)))), ((int) (((byte) (178)))));
             this.GBoxColType.Location = new System.Drawing.Point(243, -3);
             this.GBoxColType.Name = "GBoxColType";
             this.GBoxColType.Size = new System.Drawing.Size(303, 39);
@@ -124,7 +126,7 @@ namespace terrorism_gis_analysis.UI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(51)))), ((int)(((byte)(73)))));
+            this.BackColor = System.Drawing.Color.FromArgb(((int) (((byte) (46)))), ((int) (((byte) (51)))), ((int) (((byte) (73)))));
             this.ClientSize = new System.Drawing.Size(706, 48);
             this.Controls.Add(this.GBoxColType);
             this.Controls.Add(this.ChBoxToolTip);
@@ -135,7 +137,6 @@ namespace terrorism_gis_analysis.UI
             this.GBoxColType.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
-
         }
 
         #endregion

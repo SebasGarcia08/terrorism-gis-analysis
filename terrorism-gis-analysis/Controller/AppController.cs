@@ -14,45 +14,45 @@ namespace terrorism_gis_analysis.Controller
         public const string CATEGORICAL = "CATEGORICAL";
         public const string STRING = "STRING";
         
-        private readonly ModelController ModelController;
+        private readonly ModelController Model;
         private MainForm View;
         
         public AppController(MainForm view)
         {
-            this.ModelController = new ModelController();
+            this.Model = new ModelController();
             this.View = view;
         }
 
         public string[] ReadAndGetColumns(string filePath)
         {
-            ModelController.ReadHeaders(filePath);
-            return ModelController.GetHeaders();
+            Model.ReadHeaders(filePath);
+            return Model.GetHeaders();
         }
 
         public DataTable ReadAndGetReport(BackgroundWorker bkgWorker, Dictionary<string, string> col2Type)
         {
-            ModelController.ReadTable(bkgWorker, col2Type);
-            return ModelController.GetDataTable();
+            Model.ReadTable(bkgWorker, col2Type);
+            return Model.GetDataTable();
         }
 
         public DataTable GetDataTable()
         {
-            return ModelController.GetDataTable();
+            return Model.GetDataTable();
         }
         
         public FilterMakerForm CreateFiltererMaker()
         {
-            Dictionary<string, string> vars2Types = ModelController.GetColumnTypes();
-            Dictionary<string, HashSet<string>> col2Categorical = ModelController.GetCol2Categorical();
+            Dictionary<string, string> vars2Types = Model.GetColumnTypes();
+            Dictionary<string, HashSet<string>> col2Categorical = Model.GetCol2Categorical();
             return new FilterMakerForm(View, this, vars2Types, col2Categorical);
         }
 
         private void UpdateViews()
         {
-            DataRow[] QueryRows = ModelController.GetDataTableRows();
+            DataRow[] QueryRows = Model.GetDataTableRows();
             View.ResetMap(QueryRows);
 
-            DataTable dt = ModelController.GetDataTable();
+            DataTable dt = Model.GetDataTable();
             
             DataTable dt2 = InitializeDataTable();
             
@@ -70,16 +70,16 @@ namespace terrorism_gis_analysis.Controller
 
         private void ResetUpdateViews()
         {
-            DataRow[] QueryRows = ModelController.GetDataTableRows();
+            DataRow[] QueryRows = Model.GetDataTableRows();
             View.ResetMap(QueryRows);
             
-            View.UpdateTable(ModelController.GetDataTable());
+            View.UpdateTable(Model.GetDataTable());
         }
 
         private DataTable InitializeDataTable()
         {
-            string[] Headers = ModelController.GetHeaders();
-            Dictionary<string, string> ColumnTypes = ModelController.GetColumnTypes();
+            string[] Headers = Model.GetHeaders();
+            Dictionary<string, string> ColumnTypes = Model.GetColumnTypes();
             
             DataTable dt = new DataTable();
             
@@ -102,14 +102,14 @@ namespace terrorism_gis_analysis.Controller
 
         public void ResetFilters()
         {
-            ModelController.ResetFilters();
+            Model.ResetFilters();
             ResetUpdateViews();
             View.DeleteFilterCards();
         }
         
         public bool addStringFilter(string columnName, string param)
         {
-            ModelController.AddStringFilter(columnName, param);
+            Model.AddStringFilter(columnName, param);
             
            UpdateViews();
             
@@ -120,7 +120,7 @@ namespace terrorism_gis_analysis.Controller
         
         public bool addNumberFilter(string columnName, int param1, int param2)
         {
-            ModelController.AddNumberFilter(columnName, param1, param2);
+            Model.AddNumberFilter(columnName, param1, param2);
             
             UpdateViews();
             
@@ -129,7 +129,7 @@ namespace terrorism_gis_analysis.Controller
 
         public bool addCategoricalFilter( string columnName, string[] parameters)
         {
-            ModelController.AddCategoricalFilter(columnName, parameters);
+            Model.AddCategoricalFilter(columnName, parameters);
             
             UpdateViews();
             

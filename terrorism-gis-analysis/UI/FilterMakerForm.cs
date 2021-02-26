@@ -23,8 +23,8 @@ namespace terrorism_gis_analysis.UI
         // Categorical
         private readonly ComboBox CBoxCategorical;
 
-        string CurrSelection;
-
+        private string CurrSelection;
+        private FilterItemsPanel PnlFilterItems;
         private MainForm MainView;
 
         public FilterMakerForm(MainForm mainView, AppController appController, Dictionary<string, string> variables2Type, Dictionary<string, HashSet<string>> col2Categorical)
@@ -45,10 +45,13 @@ namespace terrorism_gis_analysis.UI
             Col2Categorical = col2Categorical;
             MainView = mainView;
             this.appController = appController;
+            PnlFilterItems = new FilterItemsPanel();
         }
 
         private void BtnAddFilter_Click(object sender, EventArgs e)
         {
+            MainView.AddToFiltersSidebarIfNotContained(PnlFilterItems);
+            
             if(CurrSelection != null)
             {
                 string column = GetVariableSelected();
@@ -62,7 +65,8 @@ namespace terrorism_gis_analysis.UI
                         param = (string) CBoxCategorical.Items[CBoxCategorical.SelectedIndex];
                         CategoricalFilter filter = new CategoricalFilter(column, new string[] { param });
                         filterInformation = column + "\n" + param;
-                        MainView.AppendControlToFiltersSidebar(new FilterItem(filterInformation));
+                        //MainView.AppendControlToFiltersSidebar(new FilterItem(filterInformation));
+                        PnlFilterItems.AddFilterCard(new FilterItem(filterInformation));
 
                         appController.addCategoricalFilter(column, new string[]{param});
                     }
@@ -72,8 +76,9 @@ namespace terrorism_gis_analysis.UI
                     param = txtBox.Text;
                     StringFilter filter = new StringFilter(column, param);
                     filterInformation = column + "\n" + param;
-                    MainView.AppendControlToFiltersSidebar(new FilterItem(filterInformation));
-
+                    //MainView.AppendControlToFiltersSidebar(new FilterItem(filterInformation));
+                    PnlFilterItems.AddFilterCard(new FilterItem(filterInformation));
+                    
                     appController.addStringFilter(column, param);
                 } 
                 else
@@ -82,8 +87,7 @@ namespace terrorism_gis_analysis.UI
                     int max = (int) numericMax.Value;
                     NumberFilter filter = new NumberFilter(column, min, max);
                     filterInformation = column + "\n[" + min + "," + max + "]";
-                    MainView.AppendControlToFiltersSidebar(new FilterItem(filterInformation));
-
+                    PnlFilterItems.AddFilterCard(new FilterItem(filterInformation));
                     appController.addNumberFilter(column, min, max);
                 }
             } 
@@ -151,6 +155,7 @@ namespace terrorism_gis_analysis.UI
         private void BtnReset_Click(object sender, EventArgs e)
         {
             appController.ResetFilters();
+            PnlFilterItems.RemoveFilters();
         }
     }
 }

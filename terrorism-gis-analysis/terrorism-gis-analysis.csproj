@@ -103,6 +103,12 @@
     <Compile Include="UI\FilterItem.Designer.cs">
       <DependentUpon>FilterItem.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\FilterItemsPanel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\FilterItemsPanel.Designer.cs">
+      <DependentUpon>FilterItemsPanel.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\FilterMakerForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -140,6 +146,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\FilterItem.resx">
       <DependentUpon>FilterItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\FilterItemsPanel.resx">
+      <DependentUpon>FilterItemsPanel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\FilterMakerForm.resx">
       <DependentUpon>FilterMakerForm.cs</DependentUpon>
