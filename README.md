@@ -4,7 +4,7 @@ The current project is intended to visualize a dataset of geolocation data in a 
 
 ## Applications
 
-[Application UI](./docs/app.png)
+![Application UI](./docs/app.png)
 
 ## Documentation
 
