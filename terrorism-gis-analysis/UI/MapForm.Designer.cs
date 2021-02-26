@@ -1,5 +1,5 @@
 ﻿
-namespace terrorism_gis_analysis
+namespace terrorism_gis_analysis.UI
 {
     partial class MapForm
     {

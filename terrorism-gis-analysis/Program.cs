@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using terrorism_gis_analysis.UI;
 
 namespace terrorism_gis_analysis
 {
@@ -14,8 +15,6 @@ namespace terrorism_gis_analysis
         [STAThread]
         static void Main()
         {
-            Console.WriteLine("TEST !!!");
-            
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainForm());

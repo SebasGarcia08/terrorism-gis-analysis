@@ -5,7 +5,7 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 
-namespace terrorism_gis_analysis
+namespace terrorism_gis_analysis.UI
 {
     public partial class ChartsForm : Form
     {
@@ -24,12 +24,12 @@ namespace terrorism_gis_analysis
 
         private void ChartsForm_load(object sender, EventArgs e)
         {
-            loadBarChart();
-            loadLineChart();
-            loadPieChart();
+            LoadBarChart();
+            LoadLineChart();
+            LoadPieChart();
         }
 
-        private void loadBarChart()
+        private void LoadBarChart()
         {
             string[] x;
             int[] y;
@@ -54,7 +54,7 @@ namespace terrorism_gis_analysis
             }
         }
 
-        private void loadLineChart()
+        private void LoadLineChart()
         {
             string[] x;
             int[] y;
@@ -81,7 +81,7 @@ namespace terrorism_gis_analysis
                 
         }
 
-        private void loadPieChart()
+        private void LoadPieChart()
         {
             string[] x;
             int[] y;
@@ -136,16 +136,16 @@ namespace terrorism_gis_analysis
                  select p.Field<int>("Count")).ToArray();
         }
 
-        public void setDataBase(DataTable dt)
+        public void SetDatabase(DataTable dt)
         {
             db = dt;
             // barChart.DataSource = dt;
             // lineChart.DataSource = dt;
             // pieChart.DataSource = dt;
             
-            loadBarChart();
-            loadLineChart();
-            loadPieChart();
+            LoadBarChart();
+            LoadLineChart();
+            LoadPieChart();
             
         }
     }

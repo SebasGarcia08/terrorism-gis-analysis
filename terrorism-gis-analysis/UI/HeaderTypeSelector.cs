@@ -14,13 +14,13 @@ namespace terrorism_gis_analysis.UI
     public partial class HeaderTypeSelector : Form
     {
 
-        private string name;
+        private string ColumnName;
         
-        public HeaderTypeSelector(string name)
+        public HeaderTypeSelector(string columnName)
         {
             InitializeComponent();
-            this.name = name;
-            HeaderName.Text = name;
+            this.ColumnName = columnName;
+            HeaderName.Text = columnName;
         }
 
         public string GetTypeSelected()
@@ -40,7 +40,7 @@ namespace terrorism_gis_analysis.UI
 
         public string GetName()
         {
-            return name;
+            return ColumnName;
         }
     }
 }

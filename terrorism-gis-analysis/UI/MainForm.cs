@@ -58,7 +58,7 @@ namespace terrorism_gis_analysis
         public void UpdateTable(DataTable dt)
         {
             TableForm.SetDataSource(dt);
-            ChartsForm.setDataBase(dt);
+            ChartsForm.SetDatabase(dt);
         }
         public void ResetMap(DataRow[] rows)
         {
@@ -186,10 +186,10 @@ namespace terrorism_gis_analysis
             progressBar.Visible = false;
             LblPercentage.Visible = false;
             DataTable dt = Controller.GetDataTable();
-            MapForm.SetDabatase(dt);
+            MapForm.SetDatabase(dt);
             MapForm.SetColsInToolTips(ColsInToolTip);
             TableForm.SetDataSource(dt);
-            ChartsForm.setDataBase(dt);
+            ChartsForm.SetDatabase(dt);
         }
 
         private void BtnReadTable_Click(object sender, EventArgs e)

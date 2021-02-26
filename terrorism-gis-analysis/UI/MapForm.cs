@@ -8,13 +8,12 @@ using GMap.NET.WindowsForms.Markers;
 using GMap.NET.MapProviders;
 using System.Globalization;
 
-namespace terrorism_gis_analysis
+namespace terrorism_gis_analysis.UI
 {
     public partial class MapForm : Form
     {
-        private List<PointLatLng> points;
-
-        private GMapOverlay markers = new GMapOverlay("markers");
+        private readonly List<PointLatLng> Points;
+        private readonly GMapOverlay Markers = new GMapOverlay("markers");
 
         private DataTable db;
         private List<string> ColsInToolTips;
@@ -24,7 +23,7 @@ namespace terrorism_gis_analysis
         {
             InitializeComponent();
 
-            points = new List<PointLatLng>();
+            Points = new List<PointLatLng>();
         }
 
         private void Map_Load(object sender, EventArgs e)
@@ -34,41 +33,39 @@ namespace terrorism_gis_analysis
 
             gmap.Position = new PointLatLng(3.42158, -76.5205); //Start position
 
-            gmap.Overlays.Add(markers);
+            gmap.Overlays.Add(Markers);
             
             if(!Updated)
-                load_attacks();
+                LoadAttacks();
         }
 
-        private void setMarkers()
+        private void SetMarkers()
         {
-            for (int i = 0; i < points.Count; i++)
+            for (int i = 0; i < Points.Count; i++)
             {
-                PointLatLng p = points[i];
+                PointLatLng p = Points[i];
                 GMapMarker marker = new GMarkerGoogle(p, GMarkerGoogleType.red_dot);
                 foreach(string col in ColsInToolTips)
                 {
                     marker.ToolTipText += col + ":" + db.Rows[i][col].ToString() + "\n";
                 }
-                markers.Markers.Add(marker);
+                Markers.Markers.Add(marker);
             }
         }
         
-        private void setMarkers(DataRow[] Rows)
+        private void SetMarkers(DataRow[] rows)
         {
-            for (int i = 0; i < points.Count; i++)
+            for (int i = 0; i < Points.Count; i++)
             {
-                PointLatLng p = points[i];
+                PointLatLng p = Points[i];
                 GMapMarker marker = new GMarkerGoogle(p, GMarkerGoogleType.red_dot);
-                foreach(string col in ColsInToolTips)
-                {
-                    marker.ToolTipText += col + ":" + Rows[i][col].ToString() + "\n";
-                }
-                markers.Markers.Add(marker);
+                foreach(var col in ColsInToolTips)
+                    marker.ToolTipText += col + " : " + rows[i][col] + "\n";
+                Markers.Markers.Add(marker);
             }
         }
 
-        private void load_attacks()
+        private void LoadAttacks()
         {
             foreach (DataRow row in db.Rows)
             {
@@ -77,18 +74,18 @@ namespace terrorism_gis_analysis
 
                 PointLatLng p = new PointLatLng(lat, lng);
 
-                points.Add(p);
+                Points.Add(p);
             }
 
-            setMarkers();
-            points.Clear();
+            SetMarkers();
+            Points.Clear();
         }
         
         public void ResetMap(DataRow[] rows)
         {
             Updated = true;
             
-            markers.Clear();
+            Markers.Clear();
             
             foreach (DataRow row in rows)
             {
@@ -97,15 +94,15 @@ namespace terrorism_gis_analysis
 
                 PointLatLng p = new PointLatLng(lat, lng);
 
-                points.Add(p);
+                Points.Add(p);
             }
             
-            setMarkers(rows);
-            points.Clear();
+            SetMarkers(rows);
+            Points.Clear();
             
         }
 
-        public void SetDabatase(DataTable dt)
+        public void SetDatabase(DataTable dt)
         {
             db = dt;
         }
