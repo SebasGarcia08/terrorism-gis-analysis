@@ -68,6 +68,14 @@ namespace terrorism_gis_analysis.Controller
             
         }
 
+        private void ResetUpdateViews()
+        {
+            DataRow[] QueryRows = ModelController.GetDataTableRows();
+            View.ResetMap(QueryRows);
+            
+            View.UpdateTable(ModelController.GetDataTable());
+        }
+
         private DataTable InitializeDataTable()
         {
             string[] Headers = ModelController.GetHeaders();
@@ -90,6 +98,13 @@ namespace terrorism_gis_analysis.Controller
 
             return dt;
 
+        }
+
+        public void ResetFilters()
+        {
+            ModelController.ResetFilters();
+            ResetUpdateViews();
+            View.DeleteFilterCards();
         }
         
         public bool addStringFilter(string columnName, string param)

@@ -92,6 +92,11 @@ namespace terrorism_gis_analysis
             Filterer.BringToFront();
             Filterer.Show();
         }
+
+        public void DeleteFilterCards()
+        {
+            //TODO
+        }
         
         private void HideSubMenu(Panel subMenu)
         {

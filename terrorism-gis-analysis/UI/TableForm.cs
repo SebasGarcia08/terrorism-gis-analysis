@@ -29,7 +29,7 @@ namespace terrorism_gis_analysis
 
         private void dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            throw new System.NotImplementedException();
+            
         }
     }
 }

@@ -19,6 +19,11 @@ namespace terrorism_gis_analysis.Model
             
         }
 
+        public void ResetFilters()
+        {
+            Filters = new List<Filter>();
+        }
+        
         public bool AddStringFilter(string columnName, string param)
         {
             Filters.Add(new StringFilter(columnName, param));
