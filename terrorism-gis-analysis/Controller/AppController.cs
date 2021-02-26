@@ -2,6 +2,7 @@
 using System.Data;
 using System.ComponentModel;
 using System.Linq;
+using System.ServiceModel.Dispatcher;
 using terrorism_gis_analysis.Model;
 using terrorism_gis_analysis.UI;
 
@@ -52,13 +53,43 @@ namespace terrorism_gis_analysis.Controller
             View.ResetMap(QueryRows);
 
             DataTable dt = ModelController.GetDataTable();
-
-            DataTable dt2 = EnumerableRowCollectionExtensions.Where(dt.AsEnumerable(), row => QueryRows.Contains(row))
-                .CopyToDataTable();
+            
+            DataTable dt2 = InitializeDataTable();
+            
+            if (QueryRows.Length > 0)
+            {
+                dt2  = EnumerableRowCollectionExtensions.Where(dt.AsEnumerable(), row => QueryRows.Contains(row))
+                    .CopyToDataTable();
+            }
+            
 
             View.UpdateTable(dt2);
             
             
+        }
+
+        private DataTable InitializeDataTable()
+        {
+            string[] Headers = ModelController.GetHeaders();
+            Dictionary<string, string> ColumnTypes = ModelController.GetColumnTypes();
+            
+            DataTable dt = new DataTable();
+            
+            
+            for (int i = 0; i < Headers.Length; i++)
+            {
+                if (ColumnTypes[Headers[i]].Equals(NUMERICAL))
+                {
+                    dt.Columns.Add(Headers[i], typeof(double));
+                }
+                else
+                {
+                    dt.Columns.Add(Headers[i], typeof(string));
+                }
+            }
+
+            return dt;
+
         }
         
         public bool addStringFilter(string columnName, string param)
@@ -69,6 +100,8 @@ namespace terrorism_gis_analysis.Controller
             
             return true; 
         }
+        
+        
         
         public bool addNumberFilter(string columnName, int param1, int param2)
         {
