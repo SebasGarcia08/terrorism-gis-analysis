@@ -1,11 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using terrorism_gis_analysis.Controller;
 using terrorism_gis_analysis.Model;
@@ -14,6 +9,7 @@ namespace terrorism_gis_analysis.UI
 {
     public partial class FilterMakerForm : Form
     {
+        private AppController appController;
         private Dictionary<string, string> Variables2Type;
         private Dictionary<string, HashSet<string>> Col2Categorical;
 
@@ -31,7 +27,7 @@ namespace terrorism_gis_analysis.UI
 
         private MainForm MainView;
 
-        public FilterMakerForm(MainForm mainView, Dictionary<string, string> variables2Type, Dictionary<string, HashSet<string>> col2Categorical)
+        public FilterMakerForm(MainForm mainView, AppController appController, Dictionary<string, string> variables2Type, Dictionary<string, HashSet<string>> col2Categorical)
         {
             InitializeComponent();
             numericMin = new NumericUpDown() { Anchor = AnchorStyles.Top, Dock = DockStyle.Top, 
@@ -48,6 +44,7 @@ namespace terrorism_gis_analysis.UI
             Variables2Type = variables2Type;
             Col2Categorical = col2Categorical;
             MainView = mainView;
+            this.appController = appController;
         }
 
         private void BtnAddFilter_Click(object sender, EventArgs e)
@@ -66,6 +63,8 @@ namespace terrorism_gis_analysis.UI
                         CategoricalFilter filter = new CategoricalFilter(column, new string[] { param });
                         filterInformation = column + "\n" + param;
                         MainView.AppendControlToFiltersSidebar(new FilterItem(filterInformation));
+
+                        appController.addCategoricalFilter(column, new string[]{param});
                     }
                 }
                 else if (CurrSelection.Equals(AppController.STRING))
@@ -74,6 +73,8 @@ namespace terrorism_gis_analysis.UI
                     StringFilter filter = new StringFilter(column, param);
                     filterInformation = column + "\n" + param;
                     MainView.AppendControlToFiltersSidebar(new FilterItem(filterInformation));
+
+                    appController.addStringFilter(column, param);
                 } 
                 else
                 {
@@ -82,6 +83,8 @@ namespace terrorism_gis_analysis.UI
                     NumberFilter filter = new NumberFilter(column, min, max);
                     filterInformation = column + "\n[" + min + "," + max + "]";
                     MainView.AppendControlToFiltersSidebar(new FilterItem(filterInformation));
+
+                    appController.addNumberFilter(column, min, max);
                 }
             } 
         }

@@ -18,7 +18,8 @@ namespace terrorism_gis_analysis
 
         private DataTable db;
         private List<string> ColsInToolTips;
-
+        private bool Updated;
+        
         public MapForm()
         {
             InitializeComponent();
@@ -34,8 +35,9 @@ namespace terrorism_gis_analysis
             gmap.Position = new PointLatLng(3.42158, -76.5205); //Start position
 
             gmap.Overlays.Add(markers);
-
-            load_attacks();
+            
+            if(!Updated)
+                load_attacks();
         }
 
         private void setMarkers()
@@ -47,6 +49,20 @@ namespace terrorism_gis_analysis
                 foreach(string col in ColsInToolTips)
                 {
                     marker.ToolTipText += col + ":" + db.Rows[i][col].ToString() + "\n";
+                }
+                markers.Markers.Add(marker);
+            }
+        }
+        
+        private void setMarkers(DataRow[] Rows)
+        {
+            for (int i = 0; i < points.Count; i++)
+            {
+                PointLatLng p = points[i];
+                GMapMarker marker = new GMarkerGoogle(p, GMarkerGoogleType.red_dot);
+                foreach(string col in ColsInToolTips)
+                {
+                    marker.ToolTipText += col + ":" + Rows[i][col].ToString() + "\n";
                 }
                 markers.Markers.Add(marker);
             }
@@ -66,6 +82,27 @@ namespace terrorism_gis_analysis
 
             setMarkers();
             points.Clear();
+        }
+        
+        public void ResetMap(DataRow[] rows)
+        {
+            Updated = true;
+            
+            markers.Clear();
+            
+            foreach (DataRow row in rows)
+            {
+                double lat = (double) row["latitude"];
+                double lng = (double) row["longitude"];
+
+                PointLatLng p = new PointLatLng(lat, lng);
+
+                points.Add(p);
+            }
+            
+            setMarkers(rows);
+            points.Clear();
+            
         }
 
         public void SetDabatase(DataTable dt)

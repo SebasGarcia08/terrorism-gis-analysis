@@ -16,10 +16,8 @@ namespace terrorism_gis_analysis.Model
             
         }
 
-        public string GetFilterExpression()
-        {
-            throw new NotImplementedException();
-        }
+        public abstract string GetFilterExpression();
+
     }
 
 }

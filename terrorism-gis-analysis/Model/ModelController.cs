@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 using System.Data;
+
 
 namespace terrorism_gis_analysis.Model
 {
@@ -18,8 +16,28 @@ namespace terrorism_gis_analysis.Model
         {
             Report = new Report();
             Filters = new List<Filter>();
+            
         }
 
+        public bool AddStringFilter(string columnName, string param)
+        {
+            Filters.Add(new StringFilter(columnName, param));
+            return true; 
+        }
+        
+        public bool AddNumberFilter(string columnName, int param1, int param2)
+        {
+            Filters.Add(new NumberFilter(columnName, param1, param2));
+            return true; 
+        }
+
+        public bool AddCategoricalFilter( string columnName, string[] parameters)
+        {
+            Filters.Add(new CategoricalFilter(columnName, parameters));
+
+            return true; 
+        }
+        
         public string[] GetHeaders()
         {
             return Report.GetHeaders();
@@ -51,7 +69,7 @@ namespace terrorism_gis_analysis.Model
                 if (i < Filters.Count - 1)
                     exp += Filters[i].GetFilterExpression() + " AND ";
                 else
-                    exp += Filters[i];
+                    exp += Filters[i].GetFilterExpression();
             }
 
             return exp;
@@ -61,7 +79,12 @@ namespace terrorism_gis_analysis.Model
         {
             return Report.GetDataTable();
         }
-
+        public DataRow[] GetDataTableRows()
+        {
+            string expression = GetFilterExpression();
+            DataRow[] rows = Report.GetDataTable().Select(expression);
+            return rows;
+        }
         public Dictionary<string, string> GetColumnTypes()
         {
             return Report.ColumnTypes;

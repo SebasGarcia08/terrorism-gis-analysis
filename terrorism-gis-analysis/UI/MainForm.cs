@@ -10,12 +10,15 @@ using System.Windows.Forms;
 using System.IO;
 using terrorism_gis_analysis.Controller;
 using System.Runtime.InteropServices;
+using terrorism_gis_analysis.Model;
 using terrorism_gis_analysis.UI;
 
 namespace terrorism_gis_analysis
 {
+
     public partial class MainForm : Form
     {
+
         public const string TABLE = "Table";
         public const string MAP = "Map";
         public const string CHARTS = "Charts";
@@ -31,12 +34,15 @@ namespace terrorism_gis_analysis
         private List<HeaderTypeSelector> HeaderTypes;
         private Dictionary<string, string> Col2Type;
         private List<string> ColsInToolTip;
-        
+
+        private ModelController ModelController;
         public MainForm()
         {
             InitializeComponent();
-            
+
             this.Controller = new AppController(this);
+
+            this.ModelController = new ModelController();
             
             this.MapForm = new MapForm() { Dock = DockStyle.Fill, TopLevel = false, TopMost = true };
             this.ChartsForm = new ChartsForm() { Dock = DockStyle.Fill, TopLevel = false, TopMost = true };
@@ -49,6 +55,16 @@ namespace terrorism_gis_analysis
             ConfigureInitialState();
         }
 
+        public void UpdateTable(DataTable dt)
+        {
+            TableForm.SetDataSource(dt);
+            ChartsForm.setDataBase(dt);
+        }
+        public void ResetMap(DataRow[] rows)
+        {
+            MapForm.ResetMap(rows);
+        }
+        
         #region GUIMethods
         private void ConfigureInitialState()
         {
