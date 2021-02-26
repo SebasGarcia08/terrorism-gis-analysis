@@ -36,6 +36,7 @@ namespace terrorism_gis_analysis.UI
             this.CBoxVariables = new System.Windows.Forms.ComboBox();
             this.PnlOptionFilterer = new System.Windows.Forms.Panel();
             this.BtnAddFilter = new System.Windows.Forms.Button();
+            this.BtnReset = new System.Windows.Forms.Button();
             this.GBoxColType.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -64,7 +65,6 @@ namespace terrorism_gis_analysis.UI
             this.RBtnCategorical.Name = "RBtnCategorical";
             this.RBtnCategorical.Size = new System.Drawing.Size(77, 17);
             this.RBtnCategorical.TabIndex = 3;
-            this.RBtnCategorical.TabStop = true;
             this.RBtnCategorical.Text = "Categorical";
             this.RBtnCategorical.UseVisualStyleBackColor = true;
             this.RBtnCategorical.CheckedChanged += new System.EventHandler(this.RBtnCategorical_CheckedChanged);
@@ -72,7 +72,6 @@ namespace terrorism_gis_analysis.UI
             // RBtnString
             // 
             this.RBtnString.AutoSize = true;
-            this.RBtnString.Checked = true;
             this.RBtnString.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.RBtnString.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
             this.RBtnString.ForeColor = System.Drawing.Color.White;
@@ -80,7 +79,6 @@ namespace terrorism_gis_analysis.UI
             this.RBtnString.Name = "RBtnString";
             this.RBtnString.Size = new System.Drawing.Size(51, 17);
             this.RBtnString.TabIndex = 5;
-            this.RBtnString.TabStop = true;
             this.RBtnString.Text = "String";
             this.RBtnString.UseVisualStyleBackColor = true;
             this.RBtnString.CheckedChanged += new System.EventHandler(this.RBtnString_CheckedChanged);
@@ -95,7 +93,6 @@ namespace terrorism_gis_analysis.UI
             this.RBtnNumerical.Name = "RBtnNumerical";
             this.RBtnNumerical.Size = new System.Drawing.Size(71, 17);
             this.RBtnNumerical.TabIndex = 4;
-            this.RBtnNumerical.TabStop = true;
             this.RBtnNumerical.Text = "Numerical";
             this.RBtnNumerical.UseVisualStyleBackColor = true;
             this.RBtnNumerical.CheckedChanged += new System.EventHandler(this.RBtnNumerical_CheckedChanged);
@@ -124,7 +121,7 @@ namespace terrorism_gis_analysis.UI
             this.BtnAddFilter.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnAddFilter.Font = new System.Drawing.Font("Nirmala UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
             this.BtnAddFilter.ForeColor = System.Drawing.Color.FromArgb(((int) (((byte) (0)))), ((int) (((byte) (126)))), ((int) (((byte) (249)))));
-            this.BtnAddFilter.Location = new System.Drawing.Point(63, 159);
+            this.BtnAddFilter.Location = new System.Drawing.Point(18, 159);
             this.BtnAddFilter.Name = "BtnAddFilter";
             this.BtnAddFilter.Size = new System.Drawing.Size(86, 30);
             this.BtnAddFilter.TabIndex = 10;
@@ -133,12 +130,28 @@ namespace terrorism_gis_analysis.UI
             this.BtnAddFilter.UseVisualStyleBackColor = true;
             this.BtnAddFilter.Click += new System.EventHandler(this.BtnAddFilter_Click);
             // 
+            // BtnReset
+            // 
+            this.BtnReset.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.BtnReset.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BtnReset.Font = new System.Drawing.Font("Nirmala UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
+            this.BtnReset.ForeColor = System.Drawing.Color.FromArgb(((int) (((byte) (0)))), ((int) (((byte) (126)))), ((int) (((byte) (249)))));
+            this.BtnReset.Location = new System.Drawing.Point(125, 159);
+            this.BtnReset.Name = "BtnReset";
+            this.BtnReset.Size = new System.Drawing.Size(86, 30);
+            this.BtnReset.TabIndex = 11;
+            this.BtnReset.Text = "Reset";
+            this.BtnReset.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            this.BtnReset.UseVisualStyleBackColor = true;
+            this.BtnReset.Click += new System.EventHandler(this.BtnReset_Click);
+            // 
             // FilterMakerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int) (((byte) (24)))), ((int) (((byte) (30)))), ((int) (((byte) (54)))));
             this.ClientSize = new System.Drawing.Size(223, 197);
+            this.Controls.Add(this.BtnReset);
             this.Controls.Add(this.BtnAddFilter);
             this.Controls.Add(this.PnlOptionFilterer);
             this.Controls.Add(this.CBoxVariables);
@@ -151,6 +164,8 @@ namespace terrorism_gis_analysis.UI
             this.ResumeLayout(false);
             this.PerformLayout();
         }
+
+        private System.Windows.Forms.Button BtnReset;
 
         #endregion
         private System.Windows.Forms.GroupBox GBoxColType;
