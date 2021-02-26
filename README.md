@@ -17,6 +17,7 @@ The current project is intended to visualize a dataset of geolocation data in a 
 [Video presentation](https://youtu.be/98VelHEbMHY)
 
 ## Authors
+
 [Sebastián García Acosta](https://github.com/SebasGarcia08)
 
 [Christian Gallo Peláez](https://github.com/Gallo9923)
